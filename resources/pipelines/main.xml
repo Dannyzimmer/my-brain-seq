@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <pipeline xmlns="http://www.sing-group.org/compi/pipeline-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-	<version>0.0.1</version>
+	<version>1.3.1</version>
 
 	<params>
 		<!--Private directories-->
 		<param name="pipelineDir" shortName="pid" global="true">The directory where the pipeline is located. Must be set by the runner.</param>
 		<param name="self" shortName="self" global="true" defaultValue="/resources/pipelines/main.xml">The directory where the pipeline XML file is located.</param>
 		<param name="environment" shortName="ev" global="true">The relative path to the environment.sh script. Must be set by the runner.</param>
-		<param name="compiDir" shortName="cpiDir" global="true"  defaultValue="/resources/compi-1.5.2/">The relative path to the compi directory, relative to pipelineDir.</param>
-		<param name="envDir" shortName="env" global="true"  defaultValue="/resources/env/">The relative path to the env directory, relative to pipelineDir.</param>
-		<param name="shareDir" shortName="shrDir" global="true"  defaultValue="/resources/env/shared/">The relative path to the shared directory, relative to pipelineDir.</param>
+		<param name="compiDir" shortName="cpiDir" global="true" defaultValue="/resources/compi-1.5.2/">The relative path to the compi directory, relative to pipelineDir.</param>
+		<param name="envDir" shortName="env" global="true" defaultValue="/resources/env/">The relative path to the env directory, relative to pipelineDir.</param>
+		<param name="shareDir" shortName="shrDir" global="true" defaultValue="/resources/env/shared/">The relative path to the shared directory, relative to pipelineDir.</param>
 		<param name="toolsDir" shortName="tlDir" global="true" defaultValue="/resources/env/tools/">The relative path to the tools directory, relative to pipelineDir.</param>
 		<param name="tempDir" shortName="tmp" global="true" defaultValue="/resources/env/">The temporary directory to use during the analysis, default '/tmp'.</param>
 		<param name="scriptsDir" shortName="sd" global="true" defaultValue="/resources/scripts/">The relative path to the directory containing the scripts.</param>
-		<param name="dataDir" shortName="dd" global="true" defaultValue="/resources/data/">The relative path to the directory containing accessory data.</param>
+		<param name="dataDir" shortName="datad" global="true" defaultValue="/resources/data/">The relative path to the directory containing accessory data.</param>
 		<param name="msgDir" shortName="msgd" global="true" defaultValue="/resources/data/messages">The relative path to the directory the JSON files with the log messages.</param>
 		<param name="vendorDir" shortName="vd" global="true" defaultValue="/resources/vendors/">The relative path to the directory containing vendors data.</param>
 		<param name="vendorBinDir" shortName="vbd" global="true" defaultValue="/resources/vendors/bin">The relative path to the directory containing vendors binaries.</param>
@@ -37,22 +37,82 @@
 		<param name="testsScr" shortName="ts" global="true" defaultValue="/resources/env/shared/tests.sh">The relative path to the tests script.</param>
 		<param name="checksScr" shortName="cs" global="true" defaultValue="/resources/scripts/checks.sh">The relative path to the checks script.</param>
 		<param name="envPreparationScr" shortName="envpscr" global="true" defaultValue="/resources/scripts/env-preparation.sh">The relative path to the “env-preparation.sh” script.</param>
+		<param name="testAdapterBashScript" shortName="tabs" global="true" defaultValue="test_isadapter.sh">The relative path to the script that selects aligned/unaligned input data.</param>
+		<param name="deSeq2Rscript" shortName="rdes" global="true" defaultValue="run_deseq2.R">The relative path to the R script to run the DESeq2 analysis.</param>
+		<param name="filterCtsRscript" shortName="fcrs" global="true" defaultValue="filter_counts.R">The relative path to the R script used to filter all-counts.txt and conditions_file.</param>
+		<param name="edgerRscript" shortName="reds" global="true" defaultValue="run_edger_exact-test.R">The relative path to the R script to run the EdgeR analysis.</param>
+		<param name="enhancedVolcanoRscript" shortName="evrs" global="true" defaultValue="run_enhanced-volcano.R">The relative path to the R script to build the Volcano plot.</param>
+		<param name="deaIntRscript" shortName="deais" global="true" defaultValue="run_dea-integration.R">The relative path to the R script to run the DESeq-EdgeR results integration.</param>
+		<param name="vennRscript" shortName="rven" global="true" defaultValue="run_venn-diagram.R">The relative path to the R script to run the DESeq-EdgeR results integration.</param>
+		<param name="deseq2NormalizationRscript" shortName="dnrs" global="true" defaultValue="run_deseq2_normalization.R">The relative path to the R script for the creation of the hclust table.</param>
+		<param name="hclustMakeTableRscript" shortName="hmk" global="true" defaultValue="run_make_hclust_table.R">The relative path to the R script for the creation of the hclust table.</param>
+		<param name="hclustRscript" shortName="hcr" global="true" defaultValue="run_hierarchical-clustering.R">The relative path to the R script for the hierarchical clustering analysis.</param>
+		<param name="functionalEnrichmentRscript" shortName="fers" global="true" defaultValue="run_functional-enrichment-analysis.R">The relative path to the R script for the functional enrichment analysis.</param>
+		<param name="networkRscript" shortName="nrs" global="true" defaultValue="run_network_plot.R">The relative path to the R script for the network creation.</param>
 
 		<!--Required in compi.parameters-->
 		<param name="workingDir" shortName="wd" global="true">The working directory of the project. Must be set by the user.</param>
+		<param name="gffFile" shortName="gff">The path to the .gff file of the reference genome.</param>
+		<param name="conditions" shortName="cond">The path to the .tsv file with the rootnames of the samples, conditions and labels.</param>
+		<param name="contrast" shortName="cont">The path to the .tsv file with the contrast DESeq2 has to perform.</param>
 
 		<!--Optional in compi.parameters-->
-		<param name="threads" shortName="t" global="true" defaultValue="5">Maximum number of threads that can be used during the analysis (default 5).</param>
+		<param name="fastqDir" shortName="dd" global="true" defaultValue="input/fastq">The directory containing the fastq files (default is relative to workingDir).</param>
+		<param name="outDir" shortName="o" global="true" defaultValue="output">The directory containing the pipeline outputs (relative to workingDir).</param>
+		<param name="organism" shortName="ogn" global="true" defaultValue="Homo sapiens">The organism from which the data was obtained, needed for the functional enrichment analysis.</param>
+		<param name="adapter" shortName="adp" global="true" defaultValue="NA">The sequence of the adapter to remove.</param>
+		<param name="genome" shortName="genome" global="true" defaultValue="">The directory path to the genome to align.</param>
+		<param name="bwtIndex" shortName="bwti" global="true" defaultValue="">The absolute path to the rootname of the Bowtie index.</param>
+		<param name="bwt_additional_args" shortName="bwta" global="true" defaultValue="">Additional arguments to pass to Bowtie.</param>
+		<param name="gffFeature" shortName="gfft" defaultValue="miRNA">Feature of the .gff file to use for the annotations (eg.: miRNA, gene, transcript...), default miRNA.</param>
+		<param name="gffAttribute" shortName="gffa" defaultValue="Name">Attribute of the .gff to use in the annotations (eg.: Name, gene_id, transcript_id...), default Name.</param>
+		<param name="ft_additional_args" shortName="ftaa" global="true" defaultValue="">Additional arguments to pass to FeatureCounts.</param>
+		<param name="qvalue" shortName="qval" global="true" defaultValue="0.05">FDR-corrected pvalue used to filter miRNAs after the differential expression analysis.</param>
+		<param name="log2FC" shortName="logfc" global="true" defaultValue="0.5">Absolute value of the log2FC, used to filter miRNAs after the differential expression analysis.</param>
+		<param name="distance_method" shortName="dmt" global="true" defaultValue="euclidean">Method used to compute distances on the hierarchical clustering step, default euclidean.</param>
+		<param name="vennFormat" shortName="venf" global="true" defaultValue="png">The file format of the Venn diagram (png/svg/tiff), default png.</param>
+		<param name="selectDEAsoftware" shortName="dea" defaultValue="both" global="true">Use this param to select the differential expression analysis software (deseq, edger or both).</param>
 		<param name="containersJSON" shortName="ctjs" global="true" defaultValue="FALSE">Path to the JSON file with the Singularity image paths, overrides `containersDir`. Optionally set by the user.</param>
 		<param name="containersDir" shortName="ctnd" global="true" defaultValue="FALSE">The relative path to the directory for downloading the containers, ignored if `containersJSON` parameter is provided. Optionally set by the user.</param>
-		
-		<!--Flags-->
-		<flag name="verbose" shortName="v" global="true">Activates the stdout of the software on each task. Default "true".</flag>
-		<flag name="runChecks" shortName="chk" global="true">Runs environment and parameter checks before running the pipeline.</flag>
+
+		<!--Databases-->
+		<param name="databasesDir" shortName="db" global="true" defaultValue="/resources/data/databases/">The relative path to the directory containing the TarBase and Reactome databases.</param>
+		<param name="tarbaseDB" shortName="tbdb" global="true" defaultValue="TarBase_v8_download.txt">The relative path to the TarBase file.</param>
+		<param name="reactomeDB" shortName="rcdb" global="true" defaultValue="Ensembl2Reactome.txt">The relative path to a Reactome file with Ensembl IDs and Reactome IDs.</param>
+		<param name="reactomeInteractionsDB" shortName="rcidb" global="true" defaultValue="reactome.all_species.interactions.tab-delimited.txt">The relative path to a the Reactome file downloaded from https://reactome.org/download/current/interactors/reactome.all_species.interactions.tab-delimited.txt and renamed as ReactomeInteractions.txt.</param>
+
+		<!--Container versions-->
+		<param name="rDeseq2Version" shortName="rdv" defaultValue="1.32.0_v2" global="true">Version of the pegi3s/r_deseq2 Docker image to use.</param>
+		<param name="rEdgerVersion" shortName="redv" defaultValue="3.36.0" global="true">Version of the pegi3s/r_edger Docker image to use.</param>
+		<param name="rEnhancedVolcanoVersion" shortName="revv" defaultValue="1.12.0" global="true">Version of the pegi3s/r_enhanced-volcano Docker image to use.</param>
+		<param name="cutadaptVersion" shortName="cdv" defaultValue="1.16" global="true">Version of the pegi3s/cutadapt Docker image to use.</param>
+		<param name="fastqcVersion" shortName="fqcv" defaultValue="0.11.9" global="true">Version of the pegi3s/fastqc Docker image to use.</param>
+		<param name="bowtieVersion" shortName="bwv" defaultValue="1.2.3" global="true">Version of the pegi3s/bowtie1 Docker image to use.</param>
+		<param name="featureCountsVersion" shortName="fqv" defaultValue="2.0.0" global="true">Version of the pegi3s/feature-counts Docker image to use.</param>
+		<param name="samtoolsVersion" shortName="stv" defaultValue="1.9" global="true">Version of the pegi3s/samtools_bcftools Docker image to use.</param>
+		<param name="samtoolsBamstatsVersion" shortName="spb" defaultValue="1.10" global="true">Version of the pegi3s/samtools_bcftools Docker image to use for bam analysis.</param>
+		<param name="rdatanalysisVersion" shortName="rdav" defaultValue="4.1.1_v3" global="true">Version of the pegi3s/r_data-analysis Docker image to use.</param>
+		<param name="rVennVersion" shortName="rvv" defaultValue="1.7.0" global="true">Version of the pegi3s/r_venn-diagram Docker image to use.</param>
+		<param name="rNetworkVersion" shortName="rntv" defaultValue="4.1.1_v2_v3" global="true">Version of the pegi3s/r_network Docker image to use.</param>
+		<param name="multiqcVersion" shortName="mqv" defaultValue="1.14.0" global="true">Version of the pegi3s/multiqc Docker image to use.</param>
 
 		<!--Output-->
-		<param name="outDir" shortName="od" global="true" defaultValue="output">The directory containing the pipeline outputs (relative to workingDir)</param>
-		<param name="someStepOut" shortName="sso" global="true" defaultValue="1_some-step">The directory containing the output of task "some-step" (relative to outDir)</param>
+		<param name="fqcOut" shortName="fqco" global="true" defaultValue="1_fastqc">The relative path to the directory containing the FastQC results.</param>
+		<param name="ctdOut" shortName="ctdo" global="true" defaultValue="2_cutadapt">The relative path to the directory containing the Cutadapt results.</param>
+		<param name="bwtOut" shortName="bwto" global="true" defaultValue="3_bowtie">The relative path to the directory containing the Bowtie results.</param>
+		<param name="bamstOut" shortName="bsto" global="true" defaultValue="4_bam_stats">The relative path to the directory containing the Samtools stats and Plot-bamstats results.</param>
+		<param name="ftqOut" shortName="ftqo" global="true" defaultValue="5_feature_counts">The relative path to the directory containing the FeatureCounts results.</param>
+		<param name="dsqOut" shortName="dsqo" global="true" defaultValue="6_deseq2">The relative path to the directory containing the DESeq2 results.</param>
+		<param name="edgOut" shortName="edgo" global="true" defaultValue="6_edger">The relative path to the directory containing the EdgeR results.</param>
+		<param name="deaIntOut" shortName="dinto" global="true" defaultValue="6_deseq2+edger">The relative path to the directory containing the results of the DESeq2 and EdgeR integration.</param>
+		<param name="mqcOut" shortName="mqco" global="true" defaultValue="7_multiqc">The relative path to the directory containing the MultiQC report.</param>
+
+		<!--Flags-->
+		<flag name="runChecks" shortName="chk" global="true">Runs environment and parameter checks before running the pipeline.</flag>
+		<flag name="skipPullDockerImages" shortName="sdi">Use this flag to skip the pull-docker-images task.</flag>
+		<flag name="removeDockerImages" shortName="rdi">Use this flag to remove the Docker images after the analysis.</flag>
+		<flag name="deseqNormalizationHclust" shortName="dnh">Use this flag to perform a global count normalization with DESeq2 before the hierarchical clustering.</flag>
+		<flag name="samtools_keep_sam_files" shortName="samtools_keep_sam_files" global="true">Whether to keep samtools *.sam files after conversion.</flag>
 	</params>
 
 	<tasks>
@@ -71,16 +131,248 @@
 			bash ${pipelineDir}/${scriptsDir}/env-preparation.sh
 		</task>
 
-		<!--Prepares the Singularity Images-->
+		<!--Prepares the Singularity images-->
 		<task id="container-preparation" after="env-preparation">
 			bash ${pipelineDir}/${scriptsDir}/container-preparation.sh
 		</task>
 
-		<!--Creates the output directories-->
+		<!--Creates and recreates the declared output directories-->
 		<task id="wd-initialization" after="container-preparation">
 			bash ${pipelineDir}/${scriptsDir}/wd-initialization.sh
 		</task>
 
+		<!--Bowtie genome index build.
+		Input:
+		  genome - reference genome in FASTA (optional)
+		Output:
+		  ${workingDir}/input/genome/<name>/bowtie-index_<name>
+		Parameters:
+		  bowtieVersion - Bowtie container version
+		-->
+		<task id="build-genome-index" after="wd-initialization" params="bwtOut genome" if="[ -n &quot;${genome}&quot; ]">
+			${pipelineDir}/${scriptsDir}/build-genome-index.sh
+		</task>
+
+		<!--Quality control with FastQC.
+		Input:
+		  <file> - FASTQ file from fastqDir
+		Output:
+		  FastQC report in ${outDir}/${fqcOut}
+		Parameters:
+		  fastqcVersion - FastQC container version
+		-->
+		<foreach id="fastqc-qc" after="wd-initialization" of="command" in="ls -1 &quot;${fastqDir}&quot; | grep '.*\.fastq'" as="file">
+			${pipelineDir}/${scriptsDir}/fastqc-qc.sh
+		</foreach>
+
+		<!--Adapter removal with Cutadapt.
+		Input:
+		  <file> - FASTQ file from fastqDir
+		Output:
+		  ${outDir}/${ctdOut}/trimmed_<file> (optional)
+		Parameters:
+		  adapter - adapter sequence; NA skips this task
+		  cutadaptVersion - Cutadapt container version
+		-->
+		<foreach id="cut-sequences" after="fastqc-qc" of="command" in="ls -1 &quot;${fastqDir}&quot; | grep '.*\.fastq'" as="file" params="adapter">
+			${pipelineDir}/${scriptsDir}/cut-sequences.sh
+		</foreach>
+
+		<!--Alignment with Bowtie.
+		Input:
+		  FASTQ files from fastqDir or ${outDir}/${ctdOut}
+		  Bowtie index from genome or bwtIndex
+		Output:
+		  ${outDir}/${bwtOut}/<file>.sam
+		Parameters:
+		  bwt_additional_args - extra Bowtie arguments
+		  bowtieVersion - Bowtie container version
+		-->
+		<foreach id="bowtie-alignment" after="build-genome-index cut-sequences" of="command" in="bash &quot;${pipelineDir}/${scriptsDir}/${testAdapterBashScript}&quot; &quot;${adapter}&quot; &quot;${workingDir}/${outDir}/${ctdOut}/&quot; &quot;${fastqDir}&quot;" as="file" params="bwtIndex adapter fastqDir">
+			${pipelineDir}/${scriptsDir}/bowtie-alignment.sh
+		</foreach>
+
+		<!--Convert SAM files to sorted BAM.
+		Input:
+		  ${outDir}/${bwtOut}/*.sam
+		Output:
+		  ${outDir}/${bwtOut}/*.bam and *.bam.bai
+		Parameters:
+		  samtoolsVersion - samtools container version
+		-->
+		<foreach id="sam-to-bam" after="bowtie-alignment" of="command" in="ls -1 &quot;${workingDir}/${outDir}/${bwtOut}/&quot; | grep '.*\.fastq.*\.sam'" as="file">
+			${pipelineDir}/${scriptsDir}/sam-to-bam.sh
+		</foreach>
+
+		<!--Quality control of BAM files with SAMtools.
+		Input:
+		  ${outDir}/${bwtOut}/*.bam
+		Output:
+		  ${outDir}/${bamstOut}/<sample>/*.stats and plots
+		Parameters:
+		  samtoolsVersion - samtools container version
+		-->
+		<foreach id="bam-stats" after="sam-to-bam" of="command" in="ls -1 &quot;${workingDir}/${outDir}/${bwtOut}/&quot; | grep '.*\.fastq.*\.bam' | grep -v '.bai'" as="bamFile">
+			${pipelineDir}/${scriptsDir}/bam-stats.sh
+		</foreach>
+
+		<!--Quantification with featureCounts.
+		Input:
+		  ${outDir}/${bwtOut}/*.bam
+		  gffFile - annotation file
+		Output:
+		  ${outDir}/${ftqOut}/all-counts.txt
+		Parameters:
+		  gffFeature, gffAttribute, ft_additional_args
+		  featureCountsVersion - featureCounts container version
+		-->
+		<task id="feature-counts" after="bam-stats" params="gffFile gffFeature gffAttribute">
+			${pipelineDir}/${scriptsDir}/feature-counts.sh
+		</task>
+
+		<!--Differential expression analysis with DESeq2.
+		Input:
+		  ${outDir}/${ftqOut}/all-counts.txt
+		  conditions, contrast
+		Output:
+		  ${outDir}/${dsqOut}/<label>/DESeq2_<label>.tsv
+		Parameters:
+		  qvalue, log2FC, selectDEAsoftware
+		  rDeseq2Version - DESeq2 container version
+		-->
+		<foreach id="deseq" after="feature-counts" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast deSeq2Rscript" if="[ ${selectDEAsoftware} = deseq ] || [ ${selectDEAsoftware} = both ]">
+			${pipelineDir}/${scriptsDir}/deseq.sh
+		</foreach>
+
+		<!--Differential expression analysis with EdgeR.
+		Input:
+		  ${outDir}/${ftqOut}/all-counts.txt
+		  conditions, contrast
+		Output:
+		  ${outDir}/${edgOut}/<label>/EdgeR_<label>.tsv
+		Parameters:
+		  qvalue, log2FC, selectDEAsoftware
+		  rEdgerVersion - EdgeR container version
+		-->
+		<foreach id="edger" after="feature-counts" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast edgerRscript" if="[ ${selectDEAsoftware} = edger ] || [ ${selectDEAsoftware} = both ]">
+			${pipelineDir}/${scriptsDir}/edger.sh
+		</foreach>
+
+		<!--Integrate DESeq2 and EdgeR results.
+		Input:
+		  DESeq2 and EdgeR result tables
+		  contrast
+		Output:
+		  ${outDir}/${deaIntOut}/<label>/DEmiRNAs_<contrast>_deseq-edger_integrated.tsv
+		Parameters:
+		  qvalue, log2FC, selectDEAsoftware
+		-->
+		<foreach id="dea-integration" after="deseq edger" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast" if="[ ${selectDEAsoftware} = both ]">
+			${pipelineDir}/${scriptsDir}/dea-integration.sh
+		</foreach>
+
+		<!--Build the Venn diagram with the integrated DESeq2+EdgeR results.
+		Input:
+		  ${outDir}/${deaIntOut}/<label>/pipel/*_venn.tsv
+		Output:
+		  ${outDir}/${deaIntOut}/<label>/DESeq2-EdgeR_<contrast>_results_venn.<format>
+		Parameters:
+		  vennFormat, contrast
+		-->
+		<foreach id="venn" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="vennFormat contrast" if="[ -s &quot;${workingDir}/${outDir}/${deaIntOut}/$(echo ${comparison} | cut -d '&quot;' -f 2)&quot;/pipel/*_venn.\tsv ]">
+			${pipelineDir}/${scriptsDir}/venn.sh
+		</foreach>
+
+		<!--Build Volcano plots.
+		Input:
+		  DESeq2, EdgeR and/or integrated result tables
+		Output:
+		  <label>_volcano.pdf in the corresponding output directory
+		Parameters:
+		  selectDEAsoftware, contrast
+		  rEnhancedVolcanoVersion - EnhancedVolcano container version
+		-->
+		<foreach id="volcano" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast">
+			${pipelineDir}/${scriptsDir}/volcano.sh
+		</foreach>
+
+		<!--Hierarchical clustering of DE miRNAs.
+		Input:
+		  DEA result tables and count tables
+		  conditions, contrast
+		Output:
+		  dendrogram_<software>_<contrast>.pdf
+		  heatmap_<software>_<contrast>.pdf
+		Parameters:
+		  distance_method, qvalue, log2FC
+		  deseqNormalizationHclust - optional DESeq2 normalization
+		-->
+		<foreach id="hclust" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast deseqNormalizationHclust">
+			${pipelineDir}/${scriptsDir}/hclust.sh deseqNormalizationHclust
+		</foreach>
+
+		<!--Functional enrichment analysis of DE miRNAs.
+		Input:
+		  DEA result tables
+		  TarBase and Reactome annotations
+		Output:
+		  enrichment_table_<software>_<contrast>.tsv
+		  enriched_reactome_words_<software>_<contrast>.pdf
+		Parameters:
+		  organism, qvalue
+		-->
+		<foreach id="functional-enrichment" after="hclust" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast">
+			${pipelineDir}/${scriptsDir}/functional-enrichment.sh
+		</foreach>
+
+		<!--miRNA-target network for the most enriched pathway.
+		Input:
+		  Enrichment tables
+		  TarBase and Reactome annotations/interactions
+		Output:
+		  cytoscape_table_<pathway>_<software>_<label>.tsv
+		  network_<pathway>_<software>_<label>.html
+		Parameters:
+		  organism
+		-->
+		<foreach id="network" after="functional-enrichment" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast">
+			${pipelineDir}/${scriptsDir}/network.sh
+		</foreach>
+
+		<!--Create a MultiQC report with the results.
+		Input:
+		  ${workingDir}/${outDir}
+		Output:
+		  ${workingDir}/${outDir}/${mqcOut}/multiqc_report.html
+		Parameters:
+		  multiqcVersion - MultiQC container version
+		-->
+		<task id="multiqc" after="network">
+			${pipelineDir}/${scriptsDir}/multiqc.sh
+		</task>
 	</tasks>
 
+	<metadata>
+		<task-description id="parameter-validation">Validate compi.parameters against parameters.metadata.json.</task-description>
+		<task-description id="checks">Test the environment and input data.</task-description>
+		<task-description id="env-preparation">Load the runtime environment into EnvHandler.</task-description>
+		<task-description id="container-preparation">Download and register the Singularity images.</task-description>
+		<task-description id="wd-initialization">Creates and recreates the declared output directories.</task-description>
+		<task-description id="build-genome-index">Builds a genome index if the genome parameter is passed in compi.parameters.</task-description>
+		<task-description id="fastqc-qc">Quality control with FastQC.</task-description>
+		<task-description id="cut-sequences">Adapter removal with cutadapt.</task-description>
+		<task-description id="bowtie-alignment">Alignment with Bowtie.</task-description>
+		<task-description id="sam-to-bam">Converts the sam files to bam format.</task-description>
+		<task-description id="bam-stats">Performs the quality control of the bam files with SAMtools.</task-description>
+		<task-description id="feature-counts">Performs the quantification with featureCounts.</task-description>
+		<task-description id="deseq">Performs the differential expression analysis with DESeq2.</task-description>
+		<task-description id="edger">Performs the differential expression analysis with EdgeR.</task-description>
+		<task-description id="dea-integration">Compares the results of DESeq2 and EdgeR and builds a result file with the coincidences.</task-description>
+		<task-description id="venn">Build the Venn diagram with the DESeq2+EdgeR results.</task-description>
+		<task-description id="volcano">Build the Volcano Plot with the DESeq2/EdgeR results.</task-description>
+		<task-description id="hclust">Build a Hierarchical Clustering using the DESeq2/EdgeR results.</task-description>
+		<task-description id="functional-enrichment">Performs a Functional Enrichment Analysis using the DESeq2/EdgeR results.</task-description>
+		<task-description id="network">Build the network of interactions with the most enriched pathway of the functional-enrichment task.</task-description>
+		<task-description id="multiqc">Create a MultiQC report with the results.</task-description>
+	</metadata>
 </pipeline>
