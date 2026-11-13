@@ -25,7 +25,7 @@ msg checks.USER_INPUT
 if [[ ! -d "${fastqDir}" ]]; then
 	test_msg_custom "fastq_dir" inputs.FASTQ_DIR_MISSING "directory=${fastqDir}"
 	mark_failed
-elif ! compgen -G "${fastqDir}/*.fastq" > /dev/null; then
+elif ! compgen -G "${fastqDir}/*.fastq" > /dev/null && ! compgen -G "${fastqDir}/*.fastq.gz" > /dev/null; then
 	test_msg_custom "fastq_dir" inputs.FASTQ_NONE "directory=${fastqDir}"
 	mark_failed
 else
@@ -86,22 +86,19 @@ esac
 databases_dir="$(resolve_pipeline_path "${databasesDir}")"
 
 if [[ ! -f "${databases_dir}/${tarbaseDB}" ]]; then
-	test_msg_custom "tarbase_db" inputs.DATABASE_MISSING "file=${databases_dir}/${tarbaseDB}"
-	mark_failed
+	msg checks.DATABASE_MISSING "file=${databases_dir}/${tarbaseDB}"
 else
 	test_msg_custom "tarbase_db" inputs.SUCCESS
 fi
 
 if [[ ! -f "${databases_dir}/${reactomeDB}" ]]; then
-	test_msg_custom "reactome_db" inputs.DATABASE_MISSING "file=${databases_dir}/${reactomeDB}"
-	mark_failed
+	msg checks.DATABASE_MISSING "file=${databases_dir}/${reactomeDB}"
 else
 	test_msg_custom "reactome_db" inputs.SUCCESS
 fi
 
 if [[ ! -f "${databases_dir}/${reactomeInteractionsDB}" ]]; then
-	test_msg_custom "reactome_interactions" inputs.DATABASE_MISSING "file=${databases_dir}/${reactomeInteractionsDB}"
-	mark_failed
+	msg checks.DATABASE_MISSING "file=${databases_dir}/${reactomeInteractionsDB}"
 else
 	test_msg_custom "reactome_interactions" inputs.SUCCESS
 fi

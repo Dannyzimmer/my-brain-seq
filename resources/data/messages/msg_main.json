@@ -547,5 +547,12 @@
     "severity": "info",
     "message": "Container removal done",
     "indented": 0
+  },
+  {
+    "namespace": "checks",
+    "key": "DATABASE_MISSING",
+    "severity": "warning",
+    "message": "Database file not found yet (data-preparation will download it): {file}",
+    "indented": 0
   }
 ]
