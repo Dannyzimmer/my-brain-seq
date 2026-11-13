@@ -109,8 +109,8 @@
 
 		<!--Flags-->
 		<flag name="runChecks" shortName="chk" global="true">Runs environment and parameter checks before running the pipeline.</flag>
-		<flag name="skipPullDockerImages" shortName="sdi">Use this flag to skip the pull-docker-images task.</flag>
-		<flag name="removeDockerImages" shortName="rdi">Use this flag to remove the Docker images after the analysis.</flag>
+		<flag name="skipPullDockerImages" shortName="sdi">Use this flag to skip pulling the Singularity images.</flag>
+		<flag name="removeDockerImages" shortName="rdi">Use this flag to remove the Singularity images after the analysis.</flag>
 		<flag name="deseqNormalizationHclust" shortName="dnh">Use this flag to perform a global count normalization with DESeq2 before the hierarchical clustering.</flag>
 		<flag name="samtools_keep_sam_files" shortName="samtools_keep_sam_files" global="true">Whether to keep samtools *.sam files after conversion.</flag>
 	</params>

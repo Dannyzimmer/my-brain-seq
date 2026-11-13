@@ -1,0 +1,9 @@
+{
+  "schema_version": 3,
+  "test_name": "TEST 01",
+  "description": "Full myBrainSeq test with the public test dataset.",
+  "seconds": 600,
+  "pipeline": "github.com/Dannyzimmer/my-brain-seq",
+  "pipeline_runner": "myBrainSeq",
+  "parameters": "compi.parameters"
+}

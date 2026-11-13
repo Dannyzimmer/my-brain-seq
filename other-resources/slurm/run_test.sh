@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name=calisto_test-01
+#SBATCH --job-name=mybrainseq_test-01
 #SBATCH --nodes=1
 #SBATCH --ntasks=3
 #SBATCH --cpus-per-task=10

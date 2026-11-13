@@ -1,3 +1,3 @@
 {
-    "pipeline_entrypoint": "/path/to/pipeline/public/cli"
+    "pipeline_entrypoint": "/path/to/myBrainSeq"
 }

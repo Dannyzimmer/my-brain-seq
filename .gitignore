@@ -16,3 +16,9 @@ deploy.sh
 
 # Downloaded databases
 resources/data/databases/
+
+# Test workspaces
+tests/*/output/
+tests/*/logs/
+tests/*/environment.db
+tests/*/containers/

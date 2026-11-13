@@ -1,8 +1,9 @@
 # Test data
 
-Test data for the pipeline. Look at the instructions in the README.txt included in it.
+Test data for the pipeline. See `tests/README.md` for the canonical PipeTester
+layout used after the migration.
 
-## Download links
+## Download link
 
 - http://static.sing-group.org/software/myBrainSeq/downloads/test-data-1.0.zip
 
@@ -12,3 +13,8 @@ Test data for the pipeline. Look at the instructions in the README.txt included 
 - 1.0.0
 - 1.0.1
 - 1.1.0
+- 1.3.1
+
+The dataset contains the FASTQ files, the Bowtie index and the miRNA
+annotations. It does not necessarily contain differentially expressed miRNAs;
+it is intended to exercise the whole task graph and output layout.

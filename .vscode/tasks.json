@@ -40,7 +40,6 @@
       "problemMatcher": []
     }
   ],
-
   "inputs": [
     {
       "id": "flag",
@@ -58,8 +57,29 @@
       "type": "pickString",
       "description": "Selecciona el nombre de la tarea:",
       "options": [
+        "parameter-validation",
+        "checks",
         "env-preparation",
-        "wd-initialization"
+        "container-preparation",
+        "data-preparation",
+        "wd-initialization",
+        "build-genome-index",
+        "fastqc-qc",
+        "cut-sequences",
+        "bowtie-alignment",
+        "sam-to-bam",
+        "bam-stats",
+        "feature-counts",
+        "deseq",
+        "edger",
+        "dea-integration",
+        "venn",
+        "volcano",
+        "hclust",
+        "functional-enrichment",
+        "network",
+        "multiqc",
+        "remove-containers"
       ],
       "default": "env-preparation"
     }
