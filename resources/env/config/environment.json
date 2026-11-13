@@ -1,58 +1,106 @@
 {
   "path": [
     {
-      "type":   "add-dir",
+      "type": "add-dir",
       "parent": null,
-      "key":    "wd",
-      "value":  "${workingDir}"
+      "key": "wd",
+      "value": "${workingDir}"
     },
     {
-      "type":   "add-dir",
+      "type": "add-dir",
       "parent": null,
-      "key":    "pipeline",
-      "value":  "${pipelineDir}"
+      "key": "pipeline",
+      "value": "${pipelineDir}"
     },
     {
-      "type":   "add-subdir",
+      "type": "add-subdir",
       "parent": "pipeline",
-      "key":    "scripts",
-      "value":  "${scriptsDir}"
+      "key": "scripts",
+      "value": "${scriptsDir}"
     },
     {
-    "type": "add-subdir",
-    "parent": "pipeline",
-    "key": "bin",
-    "value": "${vendorBinDir}"
-    },
-    {
-      "type":   "add-subdir",
+      "type": "add-subdir",
       "parent": "pipeline",
-      "key":    "data",
-      "value":  "${dataDir}"
+      "key": "bin",
+      "value": "${vendorBinDir}"
     },
     {
-      "type":   "add-subdir",
+      "type": "add-subdir",
       "parent": "pipeline",
-      "key":    "messages",
-      "value":  "${msgDir}"
+      "key": "data",
+      "value": "${dataDir}"
     },
     {
-      "type":   "add-subdir",
+      "type": "add-subdir",
+      "parent": "pipeline",
+      "key": "messages",
+      "value": "${msgDir}"
+    },
+    {
+      "type": "add-subdir",
       "parent": "wd",
-      "key":    "output",
-      "value":  "${outDir}"
+      "key": "output",
+      "value": "${outDir}"
     },
     {
-      "type":   "add-subdir",
+      "type": "add-subdir",
       "parent": "output",
-      "key":    "output::someStepOut",
-      "value":  "${someStepOut}"
+      "key": "output::fqcOut",
+      "value": "${fqcOut}"
     },
     {
-      "type":   "add-file",
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::ctdOut",
+      "value": "${ctdOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::bwtOut",
+      "value": "${bwtOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::bamstOut",
+      "value": "${bamstOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::ftqOut",
+      "value": "${ftqOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::dsqOut",
+      "value": "${dsqOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::edgOut",
+      "value": "${edgOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::deaIntOut",
+      "value": "${deaIntOut}"
+    },
+    {
+      "type": "add-subdir",
+      "parent": "output",
+      "key": "output::mqcOut",
+      "value": "${mqcOut}"
+    },
+    {
+      "type": "add-file",
       "parent": "scripts",
-      "key":    "checks",
-      "value":  "${checksScr}"
+      "key": "checksScr",
+      "value": "${checksScr}"
     }
   ],
   "param": []
