@@ -81,21 +81,6 @@
 		<param name="reactomeDB" shortName="rcdb" global="true" defaultValue="Ensembl2Reactome.txt">The relative path to a Reactome file with Ensembl IDs and Reactome IDs.</param>
 		<param name="reactomeInteractionsDB" shortName="rcidb" global="true" defaultValue="reactome.all_species.interactions.tab-delimited.txt">The relative path to a the Reactome file downloaded from https://reactome.org/download/current/interactors/reactome.all_species.interactions.tab-delimited.txt and renamed as ReactomeInteractions.txt.</param>
 
-		<!--Container versions-->
-		<param name="rDeseq2Version" shortName="rdv" defaultValue="1.32.0_v2" global="true">Version of the pegi3s/r_deseq2 Docker image to use.</param>
-		<param name="rEdgerVersion" shortName="redv" defaultValue="3.36.0" global="true">Version of the pegi3s/r_edger Docker image to use.</param>
-		<param name="rEnhancedVolcanoVersion" shortName="revv" defaultValue="1.12.0" global="true">Version of the pegi3s/r_enhanced-volcano Docker image to use.</param>
-		<param name="cutadaptVersion" shortName="cdv" defaultValue="1.16" global="true">Version of the pegi3s/cutadapt Docker image to use.</param>
-		<param name="fastqcVersion" shortName="fqcv" defaultValue="0.11.9" global="true">Version of the pegi3s/fastqc Docker image to use.</param>
-		<param name="bowtieVersion" shortName="bwv" defaultValue="1.2.3" global="true">Version of the pegi3s/bowtie1 Docker image to use.</param>
-		<param name="featureCountsVersion" shortName="fqv" defaultValue="2.0.0" global="true">Version of the pegi3s/feature-counts Docker image to use.</param>
-		<param name="samtoolsVersion" shortName="stv" defaultValue="1.9" global="true">Version of the pegi3s/samtools_bcftools Docker image to use.</param>
-		<param name="samtoolsBamstatsVersion" shortName="spb" defaultValue="1.10" global="true">Version of the pegi3s/samtools_bcftools Docker image to use for bam analysis.</param>
-		<param name="rdatanalysisVersion" shortName="rdav" defaultValue="4.1.1_v3" global="true">Version of the pegi3s/r_data-analysis Docker image to use.</param>
-		<param name="rVennVersion" shortName="rvv" defaultValue="1.7.0" global="true">Version of the pegi3s/r_venn-diagram Docker image to use.</param>
-		<param name="rNetworkVersion" shortName="rntv" defaultValue="4.1.1_v2_v3" global="true">Version of the pegi3s/r_network Docker image to use.</param>
-		<param name="multiqcVersion" shortName="mqv" defaultValue="1.14.0" global="true">Version of the pegi3s/multiqc Docker image to use.</param>
-
 		<!--Output-->
 		<param name="fqcOut" shortName="fqco" global="true" defaultValue="1_fastqc">The relative path to the directory containing the FastQC results.</param>
 		<param name="ctdOut" shortName="ctdo" global="true" defaultValue="2_cutadapt">The relative path to the directory containing the Cutadapt results.</param>
@@ -151,8 +136,6 @@
 		  genome - reference genome in FASTA (optional)
 		Output:
 		  ${workingDir}/input/genome/<name>/bowtie-index_<name>
-		Parameters:
-		  bowtieVersion - Bowtie container version
 		-->
 		<task id="build-genome-index" after="wd-initialization" params="bwtOut genome" if="[ -n &quot;${genome}&quot; ]">
 			${pipelineDir}/${scriptsDir}/build-genome-index.sh
@@ -163,8 +146,6 @@
 		  <file> - FASTQ file from fastqDir
 		Output:
 		  FastQC report in ${outDir}/${fqcOut}
-		Parameters:
-		  fastqcVersion - FastQC container version
 		-->
 		<foreach id="fastqc-qc" after="wd-initialization" of="command" in="ls -1 &quot;${fastqDir}&quot; | grep '.*\.fastq'" as="file">
 			${pipelineDir}/${scriptsDir}/fastqc-qc.sh
@@ -177,7 +158,6 @@
 		  ${outDir}/${ctdOut}/trimmed_<file> (optional)
 		Parameters:
 		  adapter - adapter sequence; NA skips this task
-		  cutadaptVersion - Cutadapt container version
 		-->
 		<foreach id="cut-sequences" after="fastqc-qc" of="command" in="ls -1 &quot;${fastqDir}&quot; | grep '.*\.fastq'" as="file" params="adapter">
 			${pipelineDir}/${scriptsDir}/cut-sequences.sh
@@ -191,7 +171,6 @@
 		  ${outDir}/${bwtOut}/<file>.sam
 		Parameters:
 		  bwt_additional_args - extra Bowtie arguments
-		  bowtieVersion - Bowtie container version
 		-->
 		<foreach id="bowtie-alignment" after="build-genome-index cut-sequences" of="command" in="bash &quot;${pipelineDir}/${scriptsDir}/${testAdapterBashScript}&quot; &quot;${adapter}&quot; &quot;${workingDir}/${outDir}/${ctdOut}/&quot; &quot;${fastqDir}&quot;" as="file" params="bwtIndex adapter fastqDir">
 			${pipelineDir}/${scriptsDir}/bowtie-alignment.sh
@@ -202,8 +181,6 @@
 		  ${outDir}/${bwtOut}/*.sam
 		Output:
 		  ${outDir}/${bwtOut}/*.bam and *.bam.bai
-		Parameters:
-		  samtoolsVersion - samtools container version
 		-->
 		<foreach id="sam-to-bam" after="bowtie-alignment" of="command" in="ls -1 &quot;${workingDir}/${outDir}/${bwtOut}/&quot; | grep '.*\.fastq.*\.sam'" as="file">
 			${pipelineDir}/${scriptsDir}/sam-to-bam.sh
@@ -214,8 +191,6 @@
 		  ${outDir}/${bwtOut}/*.bam
 		Output:
 		  ${outDir}/${bamstOut}/<sample>/*.stats and plots
-		Parameters:
-		  samtoolsVersion - samtools container version
 		-->
 		<foreach id="bam-stats" after="sam-to-bam" of="command" in="ls -1 &quot;${workingDir}/${outDir}/${bwtOut}/&quot; | grep '.*\.fastq.*\.bam' | grep -v '.bai'" as="bamFile">
 			${pipelineDir}/${scriptsDir}/bam-stats.sh
@@ -229,7 +204,6 @@
 		  ${outDir}/${ftqOut}/all-counts.txt
 		Parameters:
 		  gffFeature, gffAttribute, ft_additional_args
-		  featureCountsVersion - featureCounts container version
 		-->
 		<task id="feature-counts" after="bam-stats" params="gffFile gffFeature gffAttribute">
 			${pipelineDir}/${scriptsDir}/feature-counts.sh
@@ -243,7 +217,6 @@
 		  ${outDir}/${dsqOut}/<label>/DESeq2_<label>.tsv
 		Parameters:
 		  qvalue, log2FC, selectDEAsoftware
-		  rDeseq2Version - DESeq2 container version
 		-->
 		<foreach id="deseq" after="feature-counts" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast deSeq2Rscript" if="[ ${selectDEAsoftware} = deseq ] || [ ${selectDEAsoftware} = both ]">
 			${pipelineDir}/${scriptsDir}/deseq.sh
@@ -257,7 +230,6 @@
 		  ${outDir}/${edgOut}/<label>/EdgeR_<label>.tsv
 		Parameters:
 		  qvalue, log2FC, selectDEAsoftware
-		  rEdgerVersion - EdgeR container version
 		-->
 		<foreach id="edger" after="feature-counts" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast edgerRscript" if="[ ${selectDEAsoftware} = edger ] || [ ${selectDEAsoftware} = both ]">
 			${pipelineDir}/${scriptsDir}/edger.sh
@@ -295,7 +267,6 @@
 		  <label>_volcano.pdf in the corresponding output directory
 		Parameters:
 		  selectDEAsoftware, contrast
-		  rEnhancedVolcanoVersion - EnhancedVolcano container version
 		-->
 		<foreach id="volcano" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="conditions contrast">
 			${pipelineDir}/${scriptsDir}/volcano.sh
@@ -349,8 +320,6 @@
 		  ${workingDir}/${outDir}
 		Output:
 		  ${workingDir}/${outDir}/${mqcOut}/multiqc_report.html
-		Parameters:
-		  multiqcVersion - MultiQC container version
 		-->
 		<task id="multiqc" after="network">
 			${pipelineDir}/${scriptsDir}/multiqc.sh

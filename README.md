@@ -189,11 +189,12 @@ the full analysis. Both commands accept `--add-params`:
 
 ### Container versions
 
-`rDeseq2Version`, `rEdgerVersion`, `rEnhancedVolcanoVersion`, `cutadaptVersion`,
-`fastqcVersion`, `bowtieVersion`, `featureCountsVersion`, `samtoolsVersion`,
-`samtoolsBamstatsVersion`, `rdatanalysisVersion`, `rVennVersion`,
-`rNetworkVersion`, and `multiqcVersion` select the image versions. They are
-preserved from the previous Compi pipeline.
+The image tags and SIF file names are defined once in
+`resources/vendors/containers/containers.json`. They are not pipeline
+parameters and should not be set in `compi.parameters`. The old `*Version=`
+keys from previous releases are no longer accepted and must be removed from
+existing `compi.parameters` files. A user-provided `containersJSON` must use
+literal image tags and paths.
 
 ### Output directories
 

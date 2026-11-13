@@ -10,7 +10,6 @@ PRIVATE_CONTAINER_DIR="${pipelineDir}/${privateContainerDir}"
 DEFAULT_JSON="${PRIVATE_CONTAINER_DIR}/${privateContainersJSON}"
 CONFIG_JSON="$(ENV param get containerJSON)"
 CONTAINERS_DIR="$(ENV param get containersDir)"
-ENVSUBST_BIN="${pipelineDir}/${compiDir}compi-files/envsubst"
 
 if [[ "${containersJSON}" != "FALSE" ]]; then
 	# User-provided SIFManager JSON: use it as-is.
@@ -21,10 +20,10 @@ if [[ "${containersJSON}" != "FALSE" ]]; then
 	msg container_preparation.USING_CONFIG "file=${CONFIG_JSON}"
 	PULL_WITH_PWD="FALSE"
 else
-	# Generate the containers JSON from the canonical template, expanding the
-	# version parameters supplied in compi.parameters.
+	# Copy the canonical containers JSON and resolve the SIF paths against the
+	# requested download directory.
 	mkdir -p "${CONTAINERS_DIR}"
-	"${ENVSUBST_BIN}" < "${DEFAULT_JSON}" > "${CONFIG_JSON}"
+	cp "${DEFAULT_JSON}" "${CONFIG_JSON}"
 	SIF_MANAGER config update --new-path "${CONTAINERS_DIR}" "${CONFIG_JSON}"
 	msg container_preparation.USING_CONFIG "file=${CONFIG_JSON}"
 	PULL_WITH_PWD="TRUE"

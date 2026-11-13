@@ -22,13 +22,6 @@
       "help": "Output subdirectory relative to outDir.",
       "advanced": true
     },
-    "bowtieVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "bowtieVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
     "bwtIndex": {
       "widget": "path",
       "group": "Input data",
@@ -105,13 +98,6 @@
       "group": "Output directories",
       "label": "ctdOut",
       "help": "Output subdirectory relative to outDir.",
-      "advanced": true
-    },
-    "cutadaptVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "cutadaptVersion",
-      "help": "Container image version.",
       "advanced": true
     },
     "dataDir": {
@@ -294,20 +280,6 @@
       "label": "FASTQ directory",
       "help": "Directory containing the FASTQ files."
     },
-    "fastqcVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "fastqcVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "featureCountsVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "featureCountsVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
     "filterCtsRscript": {
       "widget": "text",
       "group": "Scripts",
@@ -426,13 +398,6 @@
       "hidden": true,
       "advanced": true
     },
-    "multiqcVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "multiqcVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
     "networkRscript": {
       "widget": "text",
       "group": "Scripts",
@@ -549,48 +514,6 @@
       "step": 0.01,
       "decimals": 3
     },
-    "rDeseq2Version": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rDeseq2Version",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "rEdgerVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rEdgerVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "rEnhancedVolcanoVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rEnhancedVolcanoVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "rNetworkVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rNetworkVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "rVennVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rVennVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "rdatanalysisVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "rdatanalysisVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
     "reactomeDB": {
       "widget": "text",
       "group": "Reference databases",
@@ -616,20 +539,6 @@
       "group": "Flags",
       "label": "runChecks",
       "help": "Boolean flag."
-    },
-    "samtoolsBamstatsVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "samtoolsBamstatsVersion",
-      "help": "Container image version.",
-      "advanced": true
-    },
-    "samtoolsVersion": {
-      "widget": "text",
-      "group": "Container versions",
-      "label": "samtoolsVersion",
-      "help": "Container image version.",
-      "advanced": true
     },
     "samtools_keep_sam_files": {
       "widget": "flag",

@@ -1,67 +1,67 @@
 {
   "fastqc": {
-    "pull": "docker://pegi3s/fastqc:${fastqcVersion}",
-    "path": "fastqc_${fastqcVersion}.sif",
+    "pull": "docker://pegi3s/fastqc:0.11.9",
+    "path": "fastqc_0.11.9.sif",
     "test_cmd": "fastqc --version"
   },
   "cutadapt": {
-    "pull": "docker://pegi3s/cutadapt:${cutadaptVersion}",
-    "path": "cutadapt_${cutadaptVersion}.sif",
+    "pull": "docker://pegi3s/cutadapt:1.16",
+    "path": "cutadapt_1.16.sif",
     "test_cmd": "true"
   },
   "bowtie1": {
-    "pull": "docker://pegi3s/bowtie1:${bowtieVersion}",
-    "path": "bowtie1_${bowtieVersion}.sif",
+    "pull": "docker://pegi3s/bowtie1:1.2.3",
+    "path": "bowtie1_1.2.3.sif",
     "test_cmd": "bowtie --version"
   },
   "samtools_bcftools": {
-    "pull": "docker://pegi3s/samtools_bcftools:${samtoolsVersion}",
-    "path": "samtools_bcftools_${samtoolsVersion}.sif",
+    "pull": "docker://pegi3s/samtools_bcftools:1.9",
+    "path": "samtools_bcftools_1.9.sif",
     "test_cmd": "samtools --version"
   },
   "samtools_bamstats": {
-    "pull": "docker://pegi3s/samtools_bcftools:${samtoolsBamstatsVersion}",
-    "path": "samtools_bamstats_${samtoolsBamstatsVersion}.sif",
+    "pull": "docker://pegi3s/samtools_bcftools:1.10",
+    "path": "samtools_bamstats_1.10.sif",
     "test_cmd": "samtools --version"
   },
   "feature-counts": {
-    "pull": "docker://pegi3s/feature-counts:${featureCountsVersion}",
-    "path": "feature-counts_${featureCountsVersion}.sif",
+    "pull": "docker://pegi3s/feature-counts:2.0.0",
+    "path": "feature-counts_2.0.0.sif",
     "test_cmd": "featureCounts -v"
   },
   "r_deseq2": {
-    "pull": "docker://pegi3s/r_deseq2:${rDeseq2Version}",
-    "path": "r_deseq2_${rDeseq2Version}.sif",
+    "pull": "docker://pegi3s/r_deseq2:1.32.0_v2",
+    "path": "r_deseq2_1.32.0_v2.sif",
     "test_cmd": "Rscript --version"
   },
   "r_edger": {
-    "pull": "docker://pegi3s/r_edger:${rEdgerVersion}",
-    "path": "r_edger_${rEdgerVersion}.sif",
+    "pull": "docker://pegi3s/r_edger:3.36.0",
+    "path": "r_edger_3.36.0.sif",
     "test_cmd": "Rscript --version"
   },
   "r_enhanced-volcano": {
-    "pull": "docker://pegi3s/r_enhanced-volcano:${rEnhancedVolcanoVersion}",
-    "path": "r_enhanced-volcano_${rEnhancedVolcanoVersion}.sif",
+    "pull": "docker://pegi3s/r_enhanced-volcano:1.12.0",
+    "path": "r_enhanced-volcano_1.12.0.sif",
     "test_cmd": "Rscript --version"
   },
   "r_venn-diagram": {
-    "pull": "docker://pegi3s/r_venn-diagram:${rVennVersion}",
-    "path": "r_venn-diagram_${rVennVersion}.sif",
+    "pull": "docker://pegi3s/r_venn-diagram:1.7.0",
+    "path": "r_venn-diagram_1.7.0.sif",
     "test_cmd": "Rscript --version"
   },
   "r_data-analysis": {
-    "pull": "docker://pegi3s/r_data-analysis:${rdatanalysisVersion}",
-    "path": "r_data-analysis_${rdatanalysisVersion}.sif",
+    "pull": "docker://pegi3s/r_data-analysis:4.1.1_v3",
+    "path": "r_data-analysis_4.1.1_v3.sif",
     "test_cmd": "Rscript --version"
   },
   "r_network": {
-    "pull": "docker://pegi3s/r_network:${rNetworkVersion}",
-    "path": "r_network_${rNetworkVersion}.sif",
+    "pull": "docker://pegi3s/r_network:4.1.1_v2_v3",
+    "path": "r_network_4.1.1_v2_v3.sif",
     "test_cmd": "Rscript --version"
   },
   "multiqc": {
-    "pull": "docker://pegi3s/multiqc:${multiqcVersion}",
-    "path": "multiqc_${multiqcVersion}.sif",
+    "pull": "docker://pegi3s/multiqc:1.14.0",
+    "path": "multiqc_1.14.0.sif",
     "test_cmd": "multiqc --version"
   }
 }

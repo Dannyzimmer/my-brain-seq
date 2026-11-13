@@ -17,19 +17,18 @@ using `docker://` URIs.
 - `pegi3s/r_edger` (default `3.36.0`).
 - `pegi3s/r_enhanced-volcano` (default `1.12.0`).
 - `pegi3s/cutadapt` (default `1.16`).
-- `pegi3s/fastqc` (default `0.11.9`).
-- `pegi3s/bowtie1` (default `1.2.3`).
-- `pegi3s/feature-counts` (default `2.0.0`).
-- `pegi3s/samtools_bcftools` (defaults `1.9` and `1.10`).
-- `pegi3s/r_data-analysis` (default `4.1.1_v3`).
-- `pegi3s/r_venn-diagram` (default `1.7.0`).
-- `pegi3s/r_network` (default `4.1.1_v2_v3`).
-- `pegi3s/multiqc` (default `1.14.0`).
+- `pegi3s/fastqc`.
+- `pegi3s/bowtie1`.
+- `pegi3s/feature-counts`.
+- `pegi3s/samtools_bcftools` (used for alignment conversion and for BAM stats).
+- `pegi3s/r_data-analysis`.
+- `pegi3s/r_venn-diagram`.
+- `pegi3s/r_network`.
+- `pegi3s/multiqc`.
 
-The image versions are public parameters (`rDeseq2Version`, `rEdgerVersion`,
-`rEnhancedVolcanoVersion`, `cutadaptVersion`, `fastqcVersion`, `bowtieVersion`,
-`featureCountsVersion`, `samtoolsVersion`, `samtoolsBamstatsVersion`,
-`rdatanalysisVersion`, `rVennVersion`, `rNetworkVersion`, `multiqcVersion`).
+The exact image tags and SIF file names are defined in
+`resources/vendors/containers/containers.json`. They are not pipeline
+parameters; a custom `containersJSON` must contain literal tags and paths.
 
 ## Annotation databases
 
