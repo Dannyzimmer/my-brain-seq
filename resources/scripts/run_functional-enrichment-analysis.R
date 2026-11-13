@@ -232,7 +232,7 @@ for (pth in 1:dim(enrichment_table)[1]){
   # derivated calcs from "variables dependent of the pathway"
   mirnas_not_in_pathway = total_mirnas_in_pathway - n_DE_mirnas_in_pathway
   DE_mirnas_not_in_pathway = n_DE_mirnas - n_DE_mirnas_in_pathway
-  total_no_DE_mirnas = total_mirna_tested - n_DE_mirnas
+  total_no_DE_mirnas = total_mirna_tested - total_mirnas_in_pathway - DE_mirnas_not_in_pathway
 
   # build contingency table
   deTable <-  matrix(c(n_DE_mirnas_in_pathway, 

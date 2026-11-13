@@ -82,14 +82,14 @@ default_columns = c('name', 'condition', 'label')
 adjust_for = subset(colnames(conditions_table),
                     !colnames(conditions_table) %in% default_columns)
 print_adjust = paste(adjust_for, collapse=', ')
-if (length(adjust_for > 1)){
+if (length(adjust_for) > 0){
   ptm(paste0('Adjust model for: ', print_adjust))
 }else{
   ptm(paste0('No model adjustment'))
 }
 
 #confounding variables to factors
-if (length(adjust_for > 1)){
+if (length(adjust_for) > 0){
   for (i in adjust_for) {
     conditions_table[[i]] = factor(conditions_table[[i]])
   }
@@ -103,6 +103,8 @@ des_samples = as.vector(subset(conditions_table, conditions_table$condition == r
 x=x[,(names(x) %in% des_samples)]
 # remove the undesired samples from the conditions_table
 conditions_table=conditions_table[(conditions_table$name %in% des_samples),]
+# align the count matrix with the conditions table before building the groups
+x = x[, conditions_table$name, drop = FALSE]
 
 #-------------------------------------------------------------------------------
 #                             EDGER ANALYSIS
@@ -122,7 +124,7 @@ y = calcNormFactors(y)
 
 #EDGER DESIGN
 #builds the edger model matrix
-if (length(adjust_for > 0)){
+if (length(adjust_for) > 0){
   adjustment = paste('conditions_table$', adjust_for, collapse=' + ', sep = '')
   design = paste("~group +", adjustment)
   design = model.matrix(formula(design))

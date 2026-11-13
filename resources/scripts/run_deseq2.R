@@ -86,14 +86,14 @@ default_columns = c('name', 'condition', 'label')
 adjust_for = subset(colnames(conditions_table),
                     !colnames(conditions_table) %in% default_columns)
 print_adjust = paste(adjust_for, collapse=', ')
-if (length(adjust_for > 1)){
+if (length(adjust_for) > 0){
   ptm(paste0('Adjust model for: ', print_adjust))
 }else{
   ptm(paste0('No model adjustment'))
 }
 
 #confounding variables to factors
-if (length(adjust_for > 1)){
+if (length(adjust_for) > 0){
   for (i in adjust_for) {
     conditions_table[[i]] = factor(conditions_table[[i]])
   }
@@ -107,6 +107,8 @@ des_samples = as.vector(subset(conditions_table, conditions_table$condition == r
 cts=cts[,(names(cts) %in% des_samples)]
 # remove the undesired samples from the conditions_table
 conditions_table=conditions_table[(conditions_table$name %in% des_samples),]
+# use the reference factor declared in the contrast as the reference level
+conditions_table$condition = factor(conditions_table$condition, levels = c(ref_factor, cond_factor))
 
 
 #################### END OF THE COMMON PART (DESEQ2 EDGER) #####################
@@ -138,7 +140,7 @@ if (all(rownames(conditions_table) == colnames(cts)) == FALSE) {
 #-------------------------------------------------------------------------------
 #DESEQ2 DESIGN
 #builds the edger model matrix
-if (length(adjust_for > 0)){
+if (length(adjust_for) > 0){
   adjustment = paste(adjust_for, collapse=' + ', sep = '')
   design = paste("~", adjustment, ' + condition', sep='')
 } else {
@@ -161,7 +163,7 @@ dds <- dds[keep,]
 dds <- DESeq(dds)
 
 #Order results by the smallest p-value and visualize
-res <- results(dds)
+res <- results(dds, contrast = c("condition", cond_factor, ref_factor))
 resOrdered <- res[order(res$pvalue),]
 resOrdered
 
