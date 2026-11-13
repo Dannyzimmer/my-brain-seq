@@ -1,8 +1,9 @@
 # Pipeline dependencies
 
 The canonical pipeline runs on the host and uses Singularity/Apptainer for the
-analysis tools. The container images are pulled as SIF files from Docker Hub
-using `docker://` URIs.
+analysis tools. The container images are pulled as SIF files from the URIs
+declared in `resources/vendors/containers/containers.json` (Docker Hub and
+Quay.io).
 
 ## Runtime
 
@@ -13,10 +14,10 @@ using `docker://` URIs.
 
 ## Container images
 
-- `pegi3s/r_deseq2` (default `1.32.0_v2`).
-- `pegi3s/r_edger` (default `3.36.0`).
-- `pegi3s/r_enhanced-volcano` (default `1.12.0`).
-- `pegi3s/cutadapt` (default `1.16`).
+- `pegi3s/r_deseq2`.
+- `pegi3s/r_edger`.
+- `pegi3s/r_enhanced-volcano`.
+- `quay.io/biocontainers/cutadapt` (Cutadapt 1.16).
 - `pegi3s/fastqc`.
 - `pegi3s/bowtie1`.
 - `pegi3s/feature-counts`.

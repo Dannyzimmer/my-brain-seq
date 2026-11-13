@@ -50,14 +50,8 @@ function run_container {
 	image="$(ENV param get "singularity::${container_key}")"
 	local bind_paths
 	bind_paths="$(_container_binds)"
-	local -a container_opts=()
-	# The pegi3s/cutadapt image installs the executable under /root/.local,
-	# which is only reachable when the container runs as (fake) root.
-	if [[ "${container_key}" == "cutadapt" ]]; then
-		container_opts+=(--fakeroot --no-home)
-	fi
 	LOAD_SINGULARITY_ENV
-	singularity exec "${container_opts[@]}" --pwd / --bind "${bind_paths}" "${image}" "$@"
+	singularity exec --pwd / --bind "${bind_paths}" "${image}" "$@"
 }
 
 # Register a produced file in EnvHandler.

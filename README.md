@@ -68,13 +68,15 @@ my-brain-seq/
 - Linux.
 - Python 3.
 - Singularity/Apptainer available in `PATH`.
-- Internet access on the first run to pull the `pegi3s/*` images and download
-  the TarBase/Reactome databases.
+- Internet access on the first run to pull the container images declared in
+  `resources/vendors/containers/containers.json` and download the
+  TarBase/Reactome databases.
 - Compi is vendored in `resources/compi-1.5.2/`; no system installation is
   required.
 
-The container images are pulled as SIF files from Docker Hub with
-`docker://pegi3s/...`. The default image directory is
+The container images are pulled as SIF files from the URIs declared in
+`resources/vendors/containers/containers.json` (Docker Hub and Quay.io). The
+default image directory is
 `${workingDir}/containers/`. The databases are downloaded into
 `resources/data/databases/` by the `data-preparation` task. Both locations can
 be changed with `containersDir`/`containersJSON` and `databasesDir`.
@@ -194,7 +196,9 @@ The image tags and SIF file names are defined once in
 parameters and should not be set in `compi.parameters`. The old `*Version=`
 keys from previous releases are no longer accepted and must be removed from
 existing `compi.parameters` files. A user-provided `containersJSON` must use
-literal image tags and paths.
+literal image tags and paths. If the pull source changes but the SIF filename is
+kept, `container-preparation` compares the source recorded in the SIF labels
+with the configured URI and re-downloads stale images.
 
 ### Output directories
 

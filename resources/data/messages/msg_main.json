@@ -554,5 +554,12 @@
     "severity": "warning",
     "message": "Database file not found yet (data-preparation will download it): {file}",
     "indented": 0
+  },
+  {
+    "namespace": "container_preparation",
+    "key": "REMOVING_STALE_IMAGE",
+    "severity": "warning",
+    "message": "Removing stale image \"{image}\": {path} (source {source} != expected {expected})",
+    "indented": 0
   }
 ]

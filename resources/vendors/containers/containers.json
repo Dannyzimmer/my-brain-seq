@@ -5,9 +5,9 @@
     "test_cmd": "fastqc --version"
   },
   "cutadapt": {
-    "pull": "docker://pegi3s/cutadapt:1.16",
+    "pull": "docker://quay.io/biocontainers/cutadapt:1.16--py36_1",
     "path": "cutadapt_1.16.sif",
-    "test_cmd": "true"
+    "test_cmd": "cutadapt --version"
   },
   "bowtie1": {
     "pull": "docker://pegi3s/bowtie1:1.2.3",

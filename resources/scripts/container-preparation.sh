@@ -29,6 +29,26 @@ else
 	PULL_WITH_PWD="TRUE"
 fi
 
+function drop_stale_images {
+	local config_file="$1"
+	local image_name image_path pull expected actual
+	while IFS= read -r image_name; do
+		[[ -z "${image_name}" ]] && continue
+		image_path="$(SIF_MANAGER config get-path --image-name "${image_name}" "${config_file}")"
+		[[ -f "${image_path}" ]] || continue
+		pull="$(python3 -c 'import json,sys; print(json.load(open(sys.argv[1]))[sys.argv[2]].get("pull",""))' "${config_file}" "${image_name}")"
+		[[ "${pull}" == docker://* ]] || continue
+		expected="${pull#docker://}"
+		actual="$(singularity inspect --labels "${image_path}" 2>/dev/null | sed -n 's/^org.label-schema.usage.singularity.deffile.from: *//p' | head -n1)"
+		if [[ -n "${actual}" && "${actual}" != "${expected}" ]]; then
+			msg container_preparation.REMOVING_STALE_IMAGE "image=${image_name}" "path=${image_path}" "source=${actual}" "expected=${expected}"
+			rm -f "${image_path}"
+		fi
+	done < <(SIF_MANAGER config get-names "${config_file}")
+}
+
+drop_stale_images "${CONFIG_JSON}"
+
 if [[ -v skipPullDockerImages ]]; then
 	msg container_preparation.SKIP_PULL
 elif [[ "${PULL_WITH_PWD}" == "TRUE" ]]; then
