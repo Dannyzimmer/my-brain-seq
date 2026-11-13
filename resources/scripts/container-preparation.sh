@@ -19,7 +19,7 @@ if [[ "${containersJSON}" != "FALSE" ]]; then
 		exit 1
 	fi
 	msg container_preparation.USING_CONFIG "file=${CONFIG_JSON}"
-	SIF_MANAGER --indented batch-pull "${CONFIG_JSON}"
+	PULL_WITH_PWD="FALSE"
 else
 	# Generate the containers JSON from the canonical template, expanding the
 	# version parameters supplied in compi.parameters.
@@ -27,8 +27,15 @@ else
 	"${ENVSUBST_BIN}" < "${DEFAULT_JSON}" > "${CONFIG_JSON}"
 	SIF_MANAGER config update --new-path "${CONTAINERS_DIR}" "${CONFIG_JSON}"
 	msg container_preparation.USING_CONFIG "file=${CONFIG_JSON}"
-	# TODO(flag-fix): honor skipPullDockerImages in a separate commit.
+	PULL_WITH_PWD="TRUE"
+fi
+
+if [[ -v skipPullDockerImages ]]; then
+	msg container_preparation.SKIP_PULL
+elif [[ "${PULL_WITH_PWD}" == "TRUE" ]]; then
 	SIF_MANAGER --indented batch-pull --pwd "${CONTAINERS_DIR}" "${CONFIG_JSON}"
+else
+	SIF_MANAGER --indented batch-pull "${CONFIG_JSON}"
 fi
 
 function save_img_to_env {

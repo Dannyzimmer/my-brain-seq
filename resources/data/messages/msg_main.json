@@ -519,5 +519,33 @@
     "severity": "error",
     "message": "Image \"{image}\" is not available at {path}",
     "indented": 0
+  },
+  {
+    "namespace": "container_preparation",
+    "key": "SKIP_PULL",
+    "severity": "warning",
+    "message": "Skipping container pull because skipPullDockerImages is set.",
+    "indented": 0
+  },
+  {
+    "namespace": "remove_containers",
+    "key": "STARTING",
+    "severity": "info",
+    "message": "Removing registered Singularity images...",
+    "indented": 0
+  },
+  {
+    "namespace": "remove_containers",
+    "key": "REMOVING",
+    "severity": "info",
+    "message": "Removing image \"{image}\": {path}",
+    "indented": 0
+  },
+  {
+    "namespace": "remove_containers",
+    "key": "DONE",
+    "severity": "info",
+    "message": "Container removal done",
+    "indented": 0
   }
 ]

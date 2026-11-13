@@ -32,6 +32,6 @@ if [[ -f "${bam_output}${filebam}.bam.bai" ]]; then
 	register_output "samtools:${filebam}_bai" "${bam_output}${filebam}.bam.bai" "output::bwtOut"
 fi
 
-if [ -v samtools_keep_sam_files ]; then
+if [ ! -v samtools_keep_sam_files ]; then
 	rm -f "${bam_output}/${file}"
 fi

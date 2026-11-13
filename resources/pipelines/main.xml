@@ -132,7 +132,7 @@
 		</task>
 
 		<!--Prepares the Singularity images-->
-		<task id="container-preparation" after="env-preparation">
+		<task id="container-preparation" after="env-preparation" params="skipPullDockerImages">
 			bash ${pipelineDir}/${scriptsDir}/container-preparation.sh
 		</task>
 
@@ -284,7 +284,7 @@
 		Parameters:
 		  vennFormat, contrast
 		-->
-		<foreach id="venn" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="vennFormat contrast" if="[ -s &quot;${workingDir}/${outDir}/${deaIntOut}/$(echo ${comparison} | cut -d '&quot;' -f 2)&quot;/pipel/*_venn.\tsv ]">
+		<foreach id="venn" after="deseq edger dea-integration" of="command" in="tail -n+2 &quot;${contrast}&quot;" as="comparison" params="vennFormat contrast" if="ls &quot;${workingDir}/${outDir}/${deaIntOut}/$(echo ${comparison} | cut -d '&quot;' -f 2 | xargs)/pipel/&quot;*_venn.tsv >/dev/null 2>&amp;1">
 			${pipelineDir}/${scriptsDir}/venn.sh
 		</foreach>
 
@@ -355,6 +355,14 @@
 		<task id="multiqc" after="network">
 			${pipelineDir}/${scriptsDir}/multiqc.sh
 		</task>
+
+		<!--Remove the registered Singularity images if requested.
+		Parameters:
+		  removeDockerImages - remove the SIF files after the analysis
+		-->
+		<task id="remove-containers" after="multiqc" params="removeDockerImages" if="[ -v removeDockerImages ]">
+			bash ${pipelineDir}/${scriptsDir}/remove-containers.sh
+		</task>
 	</tasks>
 
 	<metadata>
@@ -380,5 +388,6 @@
 		<task-description id="functional-enrichment">Performs a Functional Enrichment Analysis using the DESeq2/EdgeR results.</task-description>
 		<task-description id="network">Build the network of interactions with the most enriched pathway of the functional-enrichment task.</task-description>
 		<task-description id="multiqc">Create a MultiQC report with the results.</task-description>
+		<task-description id="remove-containers">Remove the registered Singularity images if requested.</task-description>
 	</metadata>
 </pipeline>
