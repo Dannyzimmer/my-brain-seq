@@ -1,0 +1,9 @@
+# REQUIRED
+workingDir=/path/to/working-directory
+
+# OPTIONAL
+threads=5
+
+# FLAGS
+verbose
+runChecks

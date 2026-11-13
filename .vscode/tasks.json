@@ -1,0 +1,67 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "run",
+      "type": "shell",
+      "options": {
+        "env": {
+          "PIPELINE_RUNNER": "./myBrainSeq",
+          "COMPI_PARAMETERS": "/path/to/compi.parameters"
+        }
+      },
+      "command": "${PIPELINE_RUNNER} run ${COMPI_PARAMETERS} --add-params \"${input:flag} ${input:task}\"",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    },
+    {
+      "label": "checks",
+      "type": "shell",
+      "options": {
+        "env": {
+          "PIPELINE_RUNNER": "./myBrainSeq",
+          "COMPI_PARAMETERS": "/path/to/compi.parameters"
+        }
+      },
+      "command": "${PIPELINE_RUNNER} test ${COMPI_PARAMETERS}",
+      "presentation": {
+        "echo": true,
+        "reveal": "always",
+        "focus": false,
+        "panel": "shared",
+        "showReuseMessage": false
+      },
+      "problemMatcher": []
+    }
+  ],
+
+  "inputs": [
+    {
+      "id": "flag",
+      "type": "pickString",
+      "description": "Selecciona un flag:",
+      "options": [
+        "--from",
+        "--single-task",
+        "--until"
+      ],
+      "default": "--from"
+    },
+    {
+      "id": "task",
+      "type": "pickString",
+      "description": "Selecciona el nombre de la tarea:",
+      "options": [
+        "env-preparation",
+        "wd-initialization"
+      ],
+      "default": "env-preparation"
+    }
+  ]
+}

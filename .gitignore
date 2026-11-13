@@ -1,7 +1,15 @@
-/image-files/
-/params-examples/
-/runners-examples/
+# Generated / local
 .Rhistory
 scripts/.Rhistory
 mirna-pipeline.code-workspace
-tasks.json
+/image-files/
+/runners-examples/
+*.db
+*.sif
+*.pyc
+__pycache__/
+._test_*
+__test_*
+_developer/*
+deploy.sh
+.DS_Store

@@ -1,0 +1,89 @@
+#!/usr/bin/env python3
+import os
+import subprocess
+import sys
+
+ROOT_PATH = os.path.dirname(os.path.abspath(__file__))
+VENDORS_REL = 'resources/vendors'
+RUNNERS_REL = 'resources/runners'
+PIPELINE_REL= 'resources/pipelines/main.xml'
+COMPIPAR_TEMPLATE_REL = 'params-examples/compi.parameters'
+PIPELINE_XML = os.path.join(ROOT_PATH, PIPELINE_REL)
+VENDORS_ABS = os.path.join(ROOT_PATH, VENDORS_REL)
+RUNNERS_ABS = os.path.join(ROOT_PATH, RUNNERS_REL)
+COMPIPAR_TEMPLATE_ABS = os.path.join(ROOT_PATH, COMPIPAR_TEMPLATE_REL)
+RUNNER_PIPELINE = os.path.join(RUNNERS_ABS, "main.sh")
+
+# Import click
+sys.path.insert(0, VENDORS_ABS)
+import click
+
+def run_main_pipeline(
+        compi_parameter: str,
+        pipeline_xml: str,
+        additional_compi_params: str):
+    cmd = [RUNNER_PIPELINE, compi_parameter, pipeline_xml, ROOT_PATH]
+    if additional_compi_params:
+        cmd.extend(additional_compi_params.split())
+    try:
+        subprocess.run(cmd, check=True)
+    except subprocess.CalledProcessError as exc:
+        sys.exit(exc.returncode)
+
+
+def _get_compipar_str()-> str:
+    with open(COMPIPAR_TEMPLATE_ABS, 'r') as file:
+        result = file.read()
+    return result
+
+def create_compipar_template(output_path: str):
+    output_file = os.path.join(output_path, "compi.parameters")
+    template = _get_compipar_str()
+    with open(output_file, 'w') as f:
+        f.write(template)
+
+# RUN COMMAND
+@click.command()
+@click.argument('compi_parameters')
+@click.option('--add-params', default="--num-tasks 5", help="Extra params to the analysis.")
+def run(compi_parameters: str, add_params: str):
+    """Starts the analysis with the pipeline."""
+    run_main_pipeline(compi_parameters, PIPELINE_XML, add_params)
+
+# TEST COMMAND
+@click.command()
+@click.argument('compi_parameters')
+def test(compi_parameters: str):
+    """Validate the execution environment and input data."""
+    task = "--until checks -- --runChecks"
+    run_main_pipeline(compi_parameters, PIPELINE_XML, task)
+
+# TEMPLATE CREATION
+@click.group()
+def templates():
+    """
+    Creates templates for the compi.parameters file.
+    """
+    pass
+
+@templates.command('cparams')
+@click.argument('output_path')
+def cparams(output_path: str):
+    """Creates a `compi.parameters` template file in the given location"""
+    # Uses the template in params-examples/compi.parameters
+    create_compipar_template(output_path)
+
+# CLI
+@click.group()
+def cli():
+    """
+    myBrainSeq: Compi pipeline for miRNA-Seq analysis of neuropsychiatric data.
+    """
+    pass
+
+cli.add_command(run)
+cli.add_command(test)
+cli.add_command(templates)
+
+if __name__ == '__main__':
+    cli()

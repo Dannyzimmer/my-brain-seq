@@ -1,0 +1,7 @@
+{
+	"container_name": {
+		"pull": "library://User_X/project_Y/image_Z",
+		"path": "../../../resources/vendors/containers/blast.sif",
+		"test_cmd": "ls -l"
+	}
+}

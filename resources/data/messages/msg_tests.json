@@ -1,0 +1,274 @@
+[
+  {
+    "namespace": "slurm",
+    "key": "SLURM_UNAVAILABLE",
+    "severity": "error",
+    "message": "Slurm is not available.",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "fastq_filenames",
+    "key": "FASTQ_PAIR_MISSING",
+    "severity": "error",
+    "message": "First read '{basename}_1.fastq' found, but second read '{basename}_2.fastq' is missing in {directory}.",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "fastq_filenames",
+    "key": "FASTQ_BASENAME_MISMATCH",
+    "severity": "error",
+    "message": "The basenames of both files must be identical except for the suffixes _1 and _2.",
+    "indented": 0,
+    "order": 2
+  },
+  {
+    "namespace": "fastq_filenames",
+    "key": "FASTQ_NONE_FOUND",
+    "severity": "error",
+    "message": "Could not find any '*_1.fastq'/'*_2.fastq' pair in {directory}.",
+    "indented": 0,
+    "order": 3
+  },
+  {
+    "namespace": "sudo_on",
+    "key": "REQUIRES_SUDO",
+    "severity": "error",
+    "message": "Script must be run with sudo.",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "singularity_slurm",
+    "key": "SINGULARITY_MODULE_NOT_AVAILABLE",
+    "severity": "error",
+    "message": "Singularity module not available through: `module load singularity`.",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "slurm",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "singularity_slurm",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "fastq_filenames",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "sudo_on",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "COMMAND_EXITED",
+    "indented": 1,
+    "severity": "error",
+    "message": "Command exited with status {exit_code}.",
+    "order": 3
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "IMAGE_NOT_FOUND",
+    "indented": 1,
+    "severity": "error",
+    "message": "Image file not found at '{image_path}'.",
+    "order": 4
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "SINGULARITY_NOT_IN_PATH",
+    "indented": 1,
+    "severity": "error",
+    "message": "Singularity binary not found in PATH.",
+    "order": 5
+  },
+  {
+    "namespace": "fasta_file",
+    "key": "REQUIRES_FILENAME",
+    "indented": 0,
+    "severity": "error",
+    "message": "No filename provided. Please specify a FASTA file to check.",
+    "order": 1
+  },
+  {
+    "namespace": "fasta_file",
+    "key": "MISSING",
+    "indented": 0,
+    "severity": "error",
+    "message": "File not found or is not a regular file.",
+    "order": 2
+  },
+  {
+    "namespace": "fasta_file",
+    "key": "INVALID_FORMAT",
+    "indented": 0,
+    "severity": "error",
+    "message": "File does not appear to be in FASTA format (missing leading '>')",
+    "order": 3
+  },
+  {
+    "namespace": "fasta_file",
+    "key": "SUCCESS",
+    "indented": 0,
+    "severity": "info",
+    "message": "File exists and is a valid FASTA format",
+    "order": 0
+  },
+  {
+    "namespace": "singularity_json",
+    "key": "MISSING_KEY",
+    "indented": 0,
+    "severity": "error",
+    "message": "singularityJSON is missing required key: \"{key}\""
+  },
+  {
+    "namespace": "singularity_json",
+    "key": "MISSING_FILE",
+    "indented": 0,
+    "severity": "error",
+    "message": "singularityJSON file \"{file}\" not found or is not a regular file."
+  },
+  {
+    "namespace": "singularity_json",
+    "key": "SUCCESS",
+    "indented": 0,
+    "severity": "info",
+    "message": "OK"
+  },
+  {
+    "namespace": "slurm",
+    "key": "LOCAL_SCRATCH_UNAVAILABLE",
+    "indented": 0,
+    "severity": "error",
+    "message": "$LOCAL_SCRATCH environment variable was not found."
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "INVALID_JSON",
+    "indented": 0,
+    "severity": "error",
+    "message": "File \"{file}\" is not valid JSON. Please provide a well-formed JSON file.",
+    "order": 2
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "SUCCESS",
+    "indented": 0,
+    "severity": "info",
+    "message": "OK",
+    "order": 0
+  },
+  {
+    "namespace": "singularity_cmd",
+    "key": "USAGE",
+    "indented": 0,
+    "severity": "error",
+    "message": "Usage: test_singularity_image <path_to_image.sif> <command> [args...]",
+    "order": 1
+  },
+  {
+    "namespace": "test_json",
+    "key": "MISSING_FILE",
+    "indented": 0,
+    "severity": "error",
+    "message": "JSON file \"{file}\" not found or is not a regular file.",
+    "order": 1
+  },
+  {
+    "namespace": "singularity_json",
+    "key": "INVALID_JSON",
+    "indented": 0,
+    "severity": "error",
+    "message": "File \"{file}\" is not valid JSON. Please provide a well-formed JSON file."
+  },
+  {
+    "namespace": "test_json",
+    "key": "INVALID_JSON",
+    "indented": 0,
+    "severity": "error",
+    "message": "File \"{file}\" is not valid JSON. Please provide a well-formed JSON file.",
+    "order": 2
+  },
+  {
+    "namespace": "test_json",
+    "key": "SUCCESS",
+    "indented": 0,
+    "severity": "info",
+    "message": "OK",
+    "order": 0
+  },
+  {
+    "namespace": "fasta_file",
+    "key": "INVALID_EXTENSION",
+    "severity": "error",
+    "message": "Invalid file extension: {file_extension}. Allowed extensions are: .fasta, .fa, .fas, .fna",
+    "indented": 0
+  },
+  {
+    "namespace": "directory",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "directory",
+    "key": "MISSING",
+    "severity": "error",
+    "message": "Missing directory: \"{dir_path}\"",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "parameters",
+    "key": "PARAMS_MULTIPLE_CHOICE_ERROR",
+    "severity": "error",
+    "message": "Conflicting parameters selected: {parameters}. Only one option may be selected.",
+    "indented": 1
+  },
+  {
+    "namespace": "parameters",
+    "key": "PARAMS_UNDEFINED_CHOICE_ERROR",
+    "severity": "error",
+    "message": "At least one option must be selected: {params}.",
+    "indented": 1
+  },
+  {
+    "namespace": "parameters",
+    "key": "PARAMS_OK",
+    "severity": "info",
+    "message": "OK",
+    "indented": 1,
+    "order": 0
+  },
+  {
+    "namespace": "parameters",
+    "key": "PARAMS_MISSING_ERROR",
+    "severity": "error",
+    "message": "Missing required parameters: {parameters}.",
+    "indented": 1,
+    "order": 1
+  }
+]

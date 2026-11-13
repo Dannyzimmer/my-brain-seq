@@ -1,0 +1,59 @@
+{
+  "path": [
+    {
+      "type":   "add-dir",
+      "parent": null,
+      "key":    "wd",
+      "value":  "${workingDir}"
+    },
+    {
+      "type":   "add-dir",
+      "parent": null,
+      "key":    "pipeline",
+      "value":  "${pipelineDir}"
+    },
+    {
+      "type":   "add-subdir",
+      "parent": "pipeline",
+      "key":    "scripts",
+      "value":  "${scriptsDir}"
+    },
+    {
+    "type": "add-subdir",
+    "parent": "pipeline",
+    "key": "bin",
+    "value": "${vendorBinDir}"
+    },
+    {
+      "type":   "add-subdir",
+      "parent": "pipeline",
+      "key":    "data",
+      "value":  "${dataDir}"
+    },
+    {
+      "type":   "add-subdir",
+      "parent": "pipeline",
+      "key":    "messages",
+      "value":  "${msgDir}"
+    },
+    {
+      "type":   "add-subdir",
+      "parent": "wd",
+      "key":    "output",
+      "value":  "${outDir}"
+    },
+    {
+      "type":   "add-subdir",
+      "parent": "output",
+      "key":    "output::someStepOut",
+      "value":  "${someStepOut}"
+    },
+    {
+      "type":   "add-file",
+      "parent": "scripts",
+      "key":    "checks",
+      "value":  "${checksScr}"
+    }
+  ],
+  "param": []
+}

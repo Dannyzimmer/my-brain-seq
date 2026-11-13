@@ -1,0 +1,159 @@
+[
+  {
+    "namespace": "env_preparation",
+    "key": "VAR_LOADED",
+    "severity": "info",
+    "message": "Environment variables loaded",
+    "indented": 0,
+    "order": 1
+  },
+  {
+    "namespace": "initialization",
+    "key": "BUILD_DIRS",
+    "severity": "info",
+    "message": "Building the output directory tree...",
+    "indented": 0,
+    "order": 0
+  },
+  {
+    "namespace": "common",
+    "key": "UPDATING_ENV_DB",
+    "severity": "info",
+    "message": "Updating environment DB...",
+    "indented": 0,
+    "order": 7
+  },
+  {
+    "namespace": "common",
+    "key": "LOAD_SINGULARITY_ENV",
+    "indented": 0,
+    "severity": "info",
+    "message": "Loading Singularity environment variables...",
+    "order": 0
+  },
+  {
+    "namespace": "initialization",
+    "key": "DIR_EXISTS",
+    "indented": 1,
+    "severity": "warning",
+    "message": "\"{dir_name}\" already exist",
+    "order": 1
+  },
+  {
+    "namespace": "initialization",
+    "key": "RM_DIR",
+    "indented": 1,
+    "severity": "info",
+    "message": "Removing \"{dirpath}\" directory and files...",
+    "order": 2
+  },
+  {
+    "namespace": "initialization",
+    "key": "DIR_CREATION",
+    "indented": 1,
+    "severity": "info",
+    "message": "Creating the directory \"{dir_name}\"",
+    "order": 3
+  },
+  {
+    "namespace": "common",
+    "key": "ENV_PREPARATION",
+    "indented": 0,
+    "severity": "info",
+    "message": "Preparing the environment...",
+    "order": 1
+  },
+  {
+    "namespace": "common",
+    "key": "GENOME_PROCESSING",
+    "indented": 0,
+    "severity": "info",
+    "message": "Processing genome:",
+    "order": 3
+  },
+  {
+    "namespace": "common",
+    "key": "GENOME_NAME",
+    "indented": 1,
+    "severity": "info",
+    "message": "> GENOME: {genome_filename}",
+    "order": 4
+  },
+  {
+    "namespace": "common",
+    "key": "PROCESSING_FILES",
+    "indented": 0,
+    "severity": "info",
+    "message": "Processing files:",
+    "order": 2
+  },
+  {
+    "namespace": "common",
+    "key": "PROCESSING_FASTQ",
+    "indented": 1,
+    "severity": "info",
+    "message": "> FASTQ_1: {fastq_1}\n> FASTQ_2: {fastq_2}",
+    "order": 5
+  },
+  {
+    "namespace": "common",
+    "key": "RM_TEMP_FILES",
+    "indented": 0,
+    "severity": "info",
+    "message": "Removing temporary files...",
+    "order": 6
+  },
+  {
+    "namespace": "common",
+    "key": "DONE",
+    "indented": 0,
+    "severity": "info",
+    "message": "Done"
+  },
+  {
+    "namespace": "checks",
+    "key": "ENV_TEST",
+    "indented": 0,
+    "severity": "info",
+    "message": "Testing environment...",
+    "order": 0
+  },
+  {
+    "namespace": "checks",
+    "key": "PARAMS_VALIDATION",
+    "indented": 0,
+    "severity": "info",
+    "message": "Validating parameter compatibility..."
+  },
+  {
+    "namespace": "checks",
+    "key": "USER_INPUT",
+    "indented": 0,
+    "severity": "info",
+    "message": "Testing compi.parameters...",
+    "order": 1
+  },
+  {
+    "namespace": "checks",
+    "key": "SIF_IMAGES",
+    "indented": 0,
+    "severity": "info",
+    "message": "Testing SIF images...",
+    "order": 2
+  },
+  {
+    "namespace": "checks",
+    "key": "ALL_PASSED",
+    "indented": 0,
+    "severity": "info",
+    "message": "All test passed!",
+    "order": 3
+  },
+  {
+    "namespace": "common",
+    "key": "IMG_SAVED_TO_ENV",
+    "indented": 1,
+    "severity": "info",
+    "message": "Saving image \"{image_name}\" to environment\u2026"
+  }
+]
