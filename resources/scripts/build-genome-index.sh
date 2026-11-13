@@ -1,35 +1,27 @@
 #!/bin/bash
 set -o nounset
 set -o errexit
+source "${environment}"
+LOAD_PRINTER
 
-echo "[MBS | build-genome-index]: Building the genome index for Bowtie..."
-echo "[MBS | build-genome-index]: Genome path: ${genome}"
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/functions.sh"
 
-genome_name="$(basename ${genome} | cut -d '.' -f1)"
+msg build_genome_index.BUILDING
+msg build_genome_index.GENOME_PATH "genome=${genome}"
 
-#makes the path to the directory using the genome filename
+genome_name="$(basename "${genome}" | cut -d '.' -f1)"
+
 bgi_output="${workingDir}/input/genome/${genome_name}/bowtie-index_${genome_name}"
-
-#second argument passed to bowtie
 bgi_index_path="${bgi_output}/${genome_name}"
 
-#if the genome directory exists and is not empty skip the index creation
-if [[ -d ${bgi_output} ]] && [[ $(ls -A ${bgi_output}) ]];
-then
-	echo "[MBS | build-genome-index]: Genome index already exists in: ${bgi_output}"
-	echo "[MBS | build-genome-index]: Skipping Bowtie1 index creation"
+if [[ -d "${bgi_output}" ]] && [[ -n "$(ls -A "${bgi_output}")" ]]; then
+	msg build_genome_index.ALREADY_EXISTS "path=${bgi_output}"
+	msg build_genome_index.SKIPPING
 else
-	echo "[MBS | build-genome-index]:   Path to genome file:           ${genome}"
-	echo "[MBS | build-genome-index]:   Output path for the index:     ${bgi_output}"
-	echo "[MBS | build-genome-index]:   Root name for the index files: ${genome}"
-
-	echo "[MBS | build-genome-index]: Running bowtie for the genome index creation"
-	docker run --rm \
-		-v ${workingDir}:${workingDir} \
-		-v ${genome}:${genome} \
-		-v ${bgi_output}:${bgi_output} \
-		pegi3s/bowtie1:${bowtieVersion} \
-		sh -c "mkdir -p ${bgi_output} \
-		&& cd ${bgi_output} \
-		&& bowtie-build -f ${genome} ${bgi_index_path}"
+	msg build_genome_index.GENOME_FILE "path=${genome}"
+	msg build_genome_index.OUTPUT_PATH "path=${bgi_output}"
+	msg build_genome_index.INDEX_ROOT "name=${genome}"
+	msg build_genome_index.RUNNING
+	run_container bowtie1 sh -c "mkdir -p '${bgi_output}' && cd '${bgi_output}' && bowtie-build -f '${genome}' '${bgi_index_path}'"
 fi

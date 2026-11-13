@@ -1,32 +1,36 @@
 #!/bin/bash
 set -o nounset
 set -o errexit
+source "${environment}"
+LOAD_PRINTER
 
-echo "[MBS | edger]: Performing differential expression analysis with EdgeR..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/functions.sh"
 
-SCRIPT_DIR=$(dirname "$0")
-source ${SCRIPT_DIR}/functions.sh
+msg edger.PERFORMING
 
-# lock Rscript before copying to avoid errors when parallel tasks are running
-cp_and_lock ${edgerRscript} 'edger' ${scriptsDir}
-
-#Inputs
-er_comparison="$(echo ""${comparison}"" | cut -d= -f1 | tr -d \" | xargs)"
-er_path_output=$(get_output_dir edger ${comparison})
-er_path_pipel="${er_path_output}/pipel"
+er_comparison="$(echo "${comparison}" | cut -d= -f1 | tr -d '"' | xargs)"
+er_path_output=$(get_output_dir edger "${comparison}")
+er_path_pipel="${er_path_output}pipel"
 er_path_counts="${er_path_pipel}/all-counts_edger_${er_comparison}.txt"
 er_path_cond="${conditions}"
 er_path_contrast="${contrast}"
+er_counts_source="$(ENV path get-dir output::ftqOut)/all-counts.txt"
 
 mkdir -p "${er_path_pipel}"
 touch "${er_path_counts}"
-cat "${workingDir}/${outDir}/${ftqOut}/all-counts.txt" | tail -n +2 > "${er_path_counts}"
+cat "${er_counts_source}" | tail -n +2 > "${er_path_counts}"
 
+msg edger.RUNNING
 
-echo "[MBS | edger]: Running EdgeR analysis..."
-docker run --rm \
-	-v ${workingDir}:${workingDir} \
-	-v ${er_path_contrast}:${er_path_contrast} \
-	-v ${er_path_cond}:${er_path_cond} \
-	pegi3s/r_edger:${rEdgerVersion} \
-		Rscript ${workingDir}/compi_scripts/${edgerRscript} "${er_path_counts}" "${er_path_cond}" "${comparison}" "${er_path_output}" "${qvalue}" "${log2FC}"
+run_container r_edger Rscript "${pipelineDir}/${scriptsDir}/${edgerRscript}" "${er_path_counts}" "${er_path_cond}" "${comparison}" "${er_path_output}" "${qvalue}" "${log2FC}"
+
+er_results_file="${er_path_output}EdgeR_${er_comparison}.tsv"
+er_demirnas_file="${er_path_output}differentially-expressed-miRNAs_EdgeR_${er_comparison}.tsv"
+
+if [[ -f "${er_results_file}" ]]; then
+	register_output "edger:${er_comparison}_results" "${er_results_file}" "output::edgOut"
+fi
+if [[ -f "${er_demirnas_file}" ]]; then
+	register_output "edger:${er_comparison}_demiRNAs" "${er_demirnas_file}" "output::edgOut"
+fi

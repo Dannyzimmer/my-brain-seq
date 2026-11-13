@@ -16,6 +16,30 @@
     "order": 0
   },
   {
+    "namespace": "initialization",
+    "key": "DIR_EXISTS",
+    "severity": "warning",
+    "message": "\"{dir_name}\" already exist",
+    "indented": 1,
+    "order": 1
+  },
+  {
+    "namespace": "initialization",
+    "key": "RM_DIR",
+    "severity": "info",
+    "message": "Removing \"{dirpath}\" directory and files...",
+    "indented": 1,
+    "order": 2
+  },
+  {
+    "namespace": "initialization",
+    "key": "DIR_CREATION",
+    "severity": "info",
+    "message": "Creating the directory \"{dir_name}\"",
+    "indented": 1,
+    "order": 3
+  },
+  {
     "namespace": "common",
     "key": "UPDATING_ENV_DB",
     "severity": "info",
@@ -25,135 +49,475 @@
   },
   {
     "namespace": "common",
-    "key": "LOAD_SINGULARITY_ENV",
-    "indented": 0,
+    "key": "IMG_SAVED_TO_ENV",
     "severity": "info",
-    "message": "Loading Singularity environment variables...",
-    "order": 0
-  },
-  {
-    "namespace": "initialization",
-    "key": "DIR_EXISTS",
-    "indented": 1,
-    "severity": "warning",
-    "message": "\"{dir_name}\" already exist",
-    "order": 1
-  },
-  {
-    "namespace": "initialization",
-    "key": "RM_DIR",
-    "indented": 1,
-    "severity": "info",
-    "message": "Removing \"{dirpath}\" directory and files...",
-    "order": 2
-  },
-  {
-    "namespace": "initialization",
-    "key": "DIR_CREATION",
-    "indented": 1,
-    "severity": "info",
-    "message": "Creating the directory \"{dir_name}\"",
-    "order": 3
-  },
-  {
-    "namespace": "common",
-    "key": "ENV_PREPARATION",
-    "indented": 0,
-    "severity": "info",
-    "message": "Preparing the environment...",
-    "order": 1
-  },
-  {
-    "namespace": "common",
-    "key": "GENOME_PROCESSING",
-    "indented": 0,
-    "severity": "info",
-    "message": "Processing genome:",
-    "order": 3
-  },
-  {
-    "namespace": "common",
-    "key": "GENOME_NAME",
-    "indented": 1,
-    "severity": "info",
-    "message": "> GENOME: {genome_filename}",
-    "order": 4
-  },
-  {
-    "namespace": "common",
-    "key": "PROCESSING_FILES",
-    "indented": 0,
-    "severity": "info",
-    "message": "Processing files:",
-    "order": 2
-  },
-  {
-    "namespace": "common",
-    "key": "PROCESSING_FASTQ",
-    "indented": 1,
-    "severity": "info",
-    "message": "> FASTQ_1: {fastq_1}\n> FASTQ_2: {fastq_2}",
-    "order": 5
-  },
-  {
-    "namespace": "common",
-    "key": "RM_TEMP_FILES",
-    "indented": 0,
-    "severity": "info",
-    "message": "Removing temporary files...",
-    "order": 6
+    "message": "Saving image \"{image_name}\" to environment...",
+    "indented": 1
   },
   {
     "namespace": "common",
     "key": "DONE",
-    "indented": 0,
     "severity": "info",
-    "message": "Done"
+    "message": "Done",
+    "indented": 0
   },
   {
     "namespace": "checks",
     "key": "ENV_TEST",
-    "indented": 0,
     "severity": "info",
     "message": "Testing environment...",
+    "indented": 0,
     "order": 0
   },
   {
     "namespace": "checks",
     "key": "PARAMS_VALIDATION",
-    "indented": 0,
     "severity": "info",
-    "message": "Validating parameter compatibility..."
+    "message": "Validating parameter compatibility...",
+    "indented": 0
   },
   {
     "namespace": "checks",
     "key": "USER_INPUT",
-    "indented": 0,
     "severity": "info",
     "message": "Testing compi.parameters...",
+    "indented": 0,
     "order": 1
   },
   {
     "namespace": "checks",
     "key": "SIF_IMAGES",
-    "indented": 0,
     "severity": "info",
     "message": "Testing SIF images...",
+    "indented": 0,
     "order": 2
   },
   {
     "namespace": "checks",
     "key": "ALL_PASSED",
-    "indented": 0,
     "severity": "info",
-    "message": "All test passed!",
+    "message": "All tests passed!",
+    "indented": 0,
     "order": 3
   },
   {
-    "namespace": "common",
-    "key": "IMG_SAVED_TO_ENV",
-    "indented": 1,
+    "namespace": "build_genome_index",
+    "key": "BUILDING",
     "severity": "info",
-    "message": "Saving image \"{image_name}\" to environment\u2026"
+    "message": "Building the genome index for Bowtie...",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "GENOME_PATH",
+    "severity": "info",
+    "message": "Genome path: {genome}",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "ALREADY_EXISTS",
+    "severity": "info",
+    "message": "Genome index already exists in: {path}",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "SKIPPING",
+    "severity": "info",
+    "message": "Skipping Bowtie1 index creation",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "GENOME_FILE",
+    "severity": "info",
+    "message": "Path to genome file: {path}",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "OUTPUT_PATH",
+    "severity": "info",
+    "message": "Output path for the index: {path}",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "INDEX_ROOT",
+    "severity": "info",
+    "message": "Root name for the index files: {name}",
+    "indented": 0
+  },
+  {
+    "namespace": "build_genome_index",
+    "key": "RUNNING",
+    "severity": "info",
+    "message": "Running bowtie for the genome index creation",
+    "indented": 0
+  },
+  {
+    "namespace": "fastqc_qc",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing a quality control with FastQC...",
+    "indented": 0
+  },
+  {
+    "namespace": "fastqc_qc",
+    "key": "PROCESSING",
+    "severity": "info",
+    "message": "Processing file: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "cut_sequences",
+    "key": "REMOVING",
+    "severity": "info",
+    "message": "Removing the adapter with Cutadapt...",
+    "indented": 0
+  },
+  {
+    "namespace": "cut_sequences",
+    "key": "PROCESSING",
+    "severity": "info",
+    "message": "Processing file: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "cut_sequences",
+    "key": "SKIPPED",
+    "severity": "warning",
+    "message": "No adapter specified, adapter removal skipped",
+    "indented": 0
+  },
+  {
+    "namespace": "bowtie_alignment",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing genome alignment with Bowtie...",
+    "indented": 0
+  },
+  {
+    "namespace": "bowtie_alignment",
+    "key": "ERROR_NO_INDEX",
+    "severity": "error",
+    "message": "No genome or bowtie index provided.",
+    "indented": 0
+  },
+  {
+    "namespace": "bowtie_alignment",
+    "key": "INDEX",
+    "severity": "info",
+    "message": "Index to align with: {index}",
+    "indented": 0
+  },
+  {
+    "namespace": "bowtie_alignment",
+    "key": "SAM_EXISTS",
+    "severity": "warning",
+    "message": "SAM file already exists, removing {file}.",
+    "indented": 0
+  },
+  {
+    "namespace": "bowtie_alignment",
+    "key": "ALIGNING",
+    "severity": "info",
+    "message": "Aligning file: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "sam_to_bam",
+    "key": "CREATING",
+    "severity": "info",
+    "message": "Creating bam files with samtools/sort...",
+    "indented": 0
+  },
+  {
+    "namespace": "sam_to_bam",
+    "key": "BAM_EXISTS",
+    "severity": "warning",
+    "message": "BAM file already exists, removing {file} and its index.",
+    "indented": 0
+  },
+  {
+    "namespace": "sam_to_bam",
+    "key": "CONVERTING",
+    "severity": "info",
+    "message": "Converting {file} to BAM.",
+    "indented": 0
+  },
+  {
+    "namespace": "bam_stats",
+    "key": "ANALYZING",
+    "severity": "info",
+    "message": "Analyzing bam files with SAMtools stats...",
+    "indented": 0
+  },
+  {
+    "namespace": "bam_stats",
+    "key": "SKIPPING",
+    "severity": "info",
+    "message": "BAM stats directory already exists, skipping bam-stats analysis: {path}",
+    "indented": 0
+  },
+  {
+    "namespace": "feature_counts",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing the read count with FeatureCounts...",
+    "indented": 0
+  },
+  {
+    "namespace": "deseq",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing differential expression analysis with DESeq2...",
+    "indented": 0
+  },
+  {
+    "namespace": "deseq",
+    "key": "RUNNING",
+    "severity": "info",
+    "message": "Running DESeq2 analysis...",
+    "indented": 0
+  },
+  {
+    "namespace": "edger",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing differential expression analysis with EdgeR...",
+    "indented": 0
+  },
+  {
+    "namespace": "edger",
+    "key": "RUNNING",
+    "severity": "info",
+    "message": "Running EdgeR analysis...",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "INTEGRATING",
+    "severity": "info",
+    "message": "Integrating DESeq2 and EdgeR results...",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "FINDING",
+    "severity": "info",
+    "message": "Finding DESeq2 and EdgeR results",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "DESEQ_FILE",
+    "severity": "info",
+    "message": "DESeq2 file: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "EDGER_FILE",
+    "severity": "info",
+    "message": "EdgeR file: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "RUNNING",
+    "severity": "info",
+    "message": "Running DESeq2-EdgeR integration...",
+    "indented": 0
+  },
+  {
+    "namespace": "dea_integration",
+    "key": "DONE",
+    "severity": "info",
+    "message": "Done!",
+    "indented": 0
+  },
+  {
+    "namespace": "venn",
+    "key": "BUILDING_FILE",
+    "severity": "info",
+    "message": "Building a file for the Venn diagram",
+    "indented": 0
+  },
+  {
+    "namespace": "venn",
+    "key": "FINDING",
+    "severity": "info",
+    "message": "Finding filtered DESeq2 and EdgeR results",
+    "indented": 0
+  },
+  {
+    "namespace": "venn",
+    "key": "BUILDING",
+    "severity": "info",
+    "message": "Building the Venn diagram",
+    "indented": 0
+  },
+  {
+    "namespace": "volcano",
+    "key": "BUILDING",
+    "severity": "info",
+    "message": "Building the Volcano Plot of {software} results...",
+    "indented": 0
+  },
+  {
+    "namespace": "volcano",
+    "key": "NO_RESULTS",
+    "severity": "warning",
+    "message": "No {software} results.",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "NORMALIZING",
+    "severity": "info",
+    "message": "Performing the global count normalization with DESeq2...",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "BUILDING_TABLE",
+    "severity": "info",
+    "message": "Building the hierarchical clustering table for {software} results...",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "RUNNING",
+    "severity": "info",
+    "message": "Running the hierarchical clustering analysis for {software} results...",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "NO_TABLE",
+    "severity": "warning",
+    "message": "No hclust table.",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "SKIPPING",
+    "severity": "info",
+    "message": "Skipping.",
+    "indented": 0
+  },
+  {
+    "namespace": "hclust",
+    "key": "NO_RESULTS",
+    "severity": "warning",
+    "message": "No {software} results.",
+    "indented": 0
+  },
+  {
+    "namespace": "functional_enrichment",
+    "key": "STARTING",
+    "severity": "info",
+    "message": "Starting the functional enrichment analysis...",
+    "indented": 0
+  },
+  {
+    "namespace": "functional_enrichment",
+    "key": "PERFORMING",
+    "severity": "info",
+    "message": "Performing the functional enrichment analysis of {software} results...",
+    "indented": 0
+  },
+  {
+    "namespace": "functional_enrichment",
+    "key": "NO_RESULTS",
+    "severity": "warning",
+    "message": "No {software} results.",
+    "indented": 0
+  },
+  {
+    "namespace": "network",
+    "key": "STARTING",
+    "severity": "info",
+    "message": "Starting the network creation...",
+    "indented": 0
+  },
+  {
+    "namespace": "network",
+    "key": "CREATING",
+    "severity": "info",
+    "message": "Creating the network of {software} results...",
+    "indented": 0
+  },
+  {
+    "namespace": "network",
+    "key": "NO_RESULTS",
+    "severity": "warning",
+    "message": "No {software} results.",
+    "indented": 0
+  },
+  {
+    "namespace": "multiqc",
+    "key": "STARTING",
+    "severity": "info",
+    "message": "Starting the creation of the MultiQC report...",
+    "indented": 0
+  },
+  {
+    "namespace": "multiqc",
+    "key": "DONE",
+    "severity": "info",
+    "message": "Done",
+    "indented": 0
+  },
+  {
+    "namespace": "data_preparation",
+    "key": "PREPARING",
+    "severity": "info",
+    "message": "Preparing the TarBase and Reactome databases...",
+    "indented": 0
+  },
+  {
+    "namespace": "data_preparation",
+    "key": "DOWNLOADING",
+    "severity": "info",
+    "message": "Downloading {file} from {url}",
+    "indented": 0
+  },
+  {
+    "namespace": "data_preparation",
+    "key": "ALREADY_EXISTS",
+    "severity": "info",
+    "message": "Database already exists: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "data_preparation",
+    "key": "DONE",
+    "severity": "info",
+    "message": "Database preparation done",
+    "indented": 0
+  },
+  {
+    "namespace": "container_preparation",
+    "key": "CONFIG_MISSING",
+    "severity": "error",
+    "message": "Containers JSON file not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "container_preparation",
+    "key": "USING_CONFIG",
+    "severity": "info",
+    "message": "Using containers JSON: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "container_preparation",
+    "key": "IMAGE_MISSING",
+    "severity": "error",
+    "message": "Image \"{image}\" is not available at {path}",
+    "indented": 0
   }
 ]

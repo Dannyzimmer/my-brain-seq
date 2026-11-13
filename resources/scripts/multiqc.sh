@@ -1,17 +1,22 @@
 #!/bin/bash
 set -o nounset
 set -o errexit
+source "${environment}"
+LOAD_PRINTER
 
-echo "[MBS | multiqc]: Starting the creation of the MultiQC report..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/functions.sh"
 
-# prepare the paths for the report
+msg multiqc.STARTING
+
 results_path="${workingDir}/${outDir}/"
-output_dir="${workingDir}/${outDir}/${mqcOut}/"
+output_dir="$(ENV path get-dir output::mqcOut)/"
 
-# run multiqc
-docker run --rm \
-	-v ${workingDir}:${workingDir} \
-	pegi3s/multiqc:${multiqcVersion} \
-	multiqc "${results_path}" --outdir "${output_dir}"
+run_container multiqc multiqc "${results_path}" --outdir "${output_dir}"
 
-echo "[MBS | multiqc]: Done"
+report_file="${output_dir}multiqc_report.html"
+if [[ -f "${report_file}" ]]; then
+	register_output "multiqc:report" "${report_file}" "output::mqcOut"
+fi
+
+msg multiqc.DONE

@@ -1,35 +1,36 @@
 #!/bin/bash
 set -o nounset
 set -o errexit
+source "${environment}"
+LOAD_PRINTER
 
-echo "[MBS | deseq]: Performing differential expression analysis with DESeq2..."
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+source "${SCRIPT_DIR}/functions.sh"
 
-SCRIPT_DIR=$(dirname "$0")
-source ${SCRIPT_DIR}/functions.sh
+msg deseq.PERFORMING
 
-# lock Rscript before copying to avoid errors when parallel tasks are running
-cp_and_lock ${deSeq2Rscript} 'deseq' ${scriptsDir}
-
-#INPUTS
-#common
-dea_comparison="$(echo ""${comparison}"" | cut -d= -f1 | tr -d \" | xargs)"
+dea_comparison="$(echo "${comparison}" | cut -d= -f1 | tr -d '"' | xargs)"
 dea_path_cond="${conditions}"
 dea_path_contrast="${contrast}"
-#deseq
-dea_path_output=$(get_output_dir deseq ${comparison})
-dea_path_pipel="${dea_path_output}/pipel"
+dea_path_output=$(get_output_dir deseq "${comparison}")
+dea_path_pipel="${dea_path_output}pipel"
 dea_path_counts="${dea_path_pipel}/all-counts_deseq_${dea_comparison}.txt"
+dea_counts_source="$(ENV path get-dir output::ftqOut)/all-counts.txt"
 
 mkdir -p "${dea_path_pipel}"
 touch "${dea_path_counts}"
-cat "${workingDir}/${outDir}/${ftqOut}/all-counts.txt" | tail -n +2 > "${dea_path_counts}"
+cat "${dea_counts_source}" | tail -n +2 > "${dea_path_counts}"
 
+msg deseq.RUNNING
 
-#echo "[MBS | edger]: Running EdgeR analysis..."
-echo "[MBS | deseq]: Running DESeq2 analysis..."
-docker run --rm \
-	-v ${workingDir}:${workingDir} \
-	-v ${dea_path_contrast}:${dea_path_contrast} \
-	-v ${dea_path_cond}:${dea_path_cond} \
-	pegi3s/r_deseq2:${rDeseq2Version} \
-		Rscript ${workingDir}/compi_scripts/${deSeq2Rscript} "${dea_path_counts}" "${dea_path_cond}" "${comparison}" "${dea_path_output}" "${qvalue}" "${log2FC}"
+run_container r_deseq2 Rscript "${pipelineDir}/${scriptsDir}/${deSeq2Rscript}" "${dea_path_counts}" "${dea_path_cond}" "${comparison}" "${dea_path_output}" "${qvalue}" "${log2FC}"
+
+dea_results_file="${dea_path_output}DESeq2_${dea_comparison}.tsv"
+dea_demirnas_file="${dea_path_output}differentially-expressed-miRNAs_DESeq2_${dea_comparison}.tsv"
+
+if [[ -f "${dea_results_file}" ]]; then
+	register_output "deseq:${dea_comparison}_results" "${dea_results_file}" "output::dsqOut"
+fi
+if [[ -f "${dea_demirnas_file}" ]]; then
+	register_output "deseq:${dea_comparison}_demiRNAs" "${dea_demirnas_file}" "output::dsqOut"
+fi
