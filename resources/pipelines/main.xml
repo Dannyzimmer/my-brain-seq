@@ -117,12 +117,12 @@
 
 	<tasks>
 		<!--Validate compi.parameters against parameters.metadata.json-->
-		<task id="parameter-validation" if="[ -v runChecks ]">
+		<task id="parameter-validation" params="compiParameters parametersMetadata" if="[ -v runChecks ]">
 			bash ${pipelineDir}/${scriptsDir}/checks-parameters.sh
 		</task>
 
 		<!--Test the environment and data provided-->
-		<task id="checks" after="parameter-validation" if="[ -v runChecks ]">
+		<task id="checks" after="parameter-validation" params="fastqDir conditions contrast gffFile genome bwtIndex organism selectDEAsoftware databasesDir tarbaseDB reactomeDB reactomeInteractionsDB" if="[ -v runChecks ]">
 			bash ${pipelineDir}/${scriptsDir}/checks.sh
 		</task>
 

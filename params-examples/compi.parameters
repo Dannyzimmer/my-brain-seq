@@ -1,9 +1,61 @@
 # REQUIRED
 workingDir=/path/to/working-directory
+gffFile=/path/to/mirbase_hsa.gff3
+conditions=/path/to/conditions_file.txt
+contrast=/path/to/contrast_file.txt
 
 # OPTIONAL
-threads=5
+fastqDir=input/fastq
+outDir=output
+organism=Homo sapiens
+adapter=NA
+genome=
+bwtIndex=
+bwt_additional_args=
+gffFeature=miRNA
+gffAttribute=Name
+ft_additional_args=
+qvalue=0.05
+log2FC=0.5
+distance_method=euclidean
+vennFormat=png
+selectDEAsoftware=both
+containersJSON=FALSE
+containersDir=FALSE
+databasesDir=/resources/data/databases/
+tarbaseDB=TarBase_v8_download.txt
+reactomeDB=Ensembl2Reactome.txt
+reactomeInteractionsDB=reactome.all_species.interactions.tab-delimited.txt
+
+# CONTAINER VERSIONS
+rDeseq2Version=1.32.0_v2
+rEdgerVersion=3.36.0
+rEnhancedVolcanoVersion=1.12.0
+cutadaptVersion=1.16
+fastqcVersion=0.11.9
+bowtieVersion=1.2.3
+featureCountsVersion=2.0.0
+samtoolsVersion=1.9
+samtoolsBamstatsVersion=1.10
+rdatanalysisVersion=4.1.1_v3
+rVennVersion=1.7.0
+rNetworkVersion=4.1.1_v2_v3
+multiqcVersion=1.14.0
+
+# OUTPUT DIRECTORIES
+fqcOut=1_fastqc
+ctdOut=2_cutadapt
+bwtOut=3_bowtie
+bamstOut=4_bam_stats
+ftqOut=5_feature_counts
+dsqOut=6_deseq2
+edgOut=6_edger
+deaIntOut=6_deseq2+edger
+mqcOut=7_multiqc
 
 # FLAGS
-verbose
-runChecks
+# runChecks
+# skipPullDockerImages
+# removeDockerImages
+# deseqNormalizationHclust
+# samtools_keep_sam_files

@@ -1,5 +1,822 @@
 {
   "schema_version": 1,
-  "parameters": {},
-  "validations": []
+  "parameters": {
+    "LoggerScr": {
+      "widget": "text",
+      "group": "Private",
+      "label": "LoggerScr",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "adapter": {
+      "widget": "text",
+      "group": "Input data",
+      "label": "Adapter sequence",
+      "help": "Adapter sequence to remove; NA skips trimming."
+    },
+    "bamstOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "bamstOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "bowtieVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "bowtieVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "bwtIndex": {
+      "widget": "path",
+      "group": "Input data",
+      "label": "Bowtie index",
+      "help": "Root name of a pre-built Bowtie index. Provide genome or bwtIndex."
+    },
+    "bwtOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "bwtOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "bwt_additional_args": {
+      "widget": "text",
+      "group": "Analysis",
+      "label": "Extra Bowtie arguments",
+      "help": "Additional arguments passed to Bowtie."
+    },
+    "checksScr": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "checksScr",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "compiDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "compiDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "compiParameters": {
+      "widget": "text",
+      "group": "Private",
+      "label": "compiParameters",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "conditions": {
+      "widget": "file",
+      "group": "Input data",
+      "label": "Conditions file",
+      "help": "TSV file with sample names, conditions and labels.",
+      "required_value": true,
+      "strict": true
+    },
+    "containersDir": {
+      "widget": "directory",
+      "group": "Containers",
+      "label": "Containers directory",
+      "help": "Directory used to download the SIF images."
+    },
+    "containersJSON": {
+      "widget": "path",
+      "group": "Containers",
+      "label": "Containers JSON",
+      "help": "Custom SIFManager containers JSON."
+    },
+    "contrast": {
+      "widget": "file",
+      "group": "Input data",
+      "label": "Contrast file",
+      "help": "TSV file with the contrasts to perform.",
+      "required_value": true,
+      "strict": true
+    },
+    "ctdOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "ctdOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "cutadaptVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "cutadaptVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "dataDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "dataDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "databasesDir": {
+      "widget": "directory",
+      "group": "Reference databases",
+      "label": "Databases directory",
+      "help": "Directory containing TarBase and Reactome files.",
+      "advanced": true
+    },
+    "deSeq2Rscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "deSeq2Rscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "deaIntOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "deaIntOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "deaIntRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "deaIntRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "deseq2NormalizationRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "deseq2NormalizationRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "deseqNormalizationHclust": {
+      "widget": "flag",
+      "group": "Flags",
+      "label": "deseqNormalizationHclust",
+      "help": "Boolean flag."
+    },
+    "distance_method": {
+      "widget": "select",
+      "group": "Analysis",
+      "label": "Distance method",
+      "help": "Distance method for hierarchical clustering.",
+      "options": [
+        {
+          "value": "euclidean",
+          "label": "euclidean"
+        },
+        {
+          "value": "maximum",
+          "label": "maximum"
+        },
+        {
+          "value": "manhattan",
+          "label": "manhattan"
+        },
+        {
+          "value": "canberra",
+          "label": "canberra"
+        },
+        {
+          "value": "binary",
+          "label": "binary"
+        },
+        {
+          "value": "pearson",
+          "label": "pearson"
+        },
+        {
+          "value": "abspearson",
+          "label": "abspearson"
+        },
+        {
+          "value": "correlation",
+          "label": "correlation"
+        },
+        {
+          "value": "abscorrelation",
+          "label": "abscorrelation"
+        },
+        {
+          "value": "spearman",
+          "label": "spearman"
+        },
+        {
+          "value": "kendall",
+          "label": "kendall"
+        }
+      ]
+    },
+    "dsqOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "dsqOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "edgOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "edgOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "edgerRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "edgerRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "enhancedVolcanoRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "enhancedVolcanoRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "envDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "envDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "envHandler": {
+      "widget": "text",
+      "group": "Private",
+      "label": "envHandler",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "envPreparationScr": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "envPreparationScr",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "environment": {
+      "widget": "text",
+      "group": "Private",
+      "label": "environment",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "environmentDB": {
+      "widget": "text",
+      "group": "Private",
+      "label": "environmentDB",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "fastqDir": {
+      "widget": "directory",
+      "group": "Project",
+      "label": "FASTQ directory",
+      "help": "Directory containing the FASTQ files."
+    },
+    "fastqcVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "fastqcVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "featureCountsVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "featureCountsVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "filterCtsRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "filterCtsRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "fqcOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "fqcOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "ft_additional_args": {
+      "widget": "text",
+      "group": "Analysis",
+      "label": "Extra featureCounts arguments",
+      "help": "Additional arguments passed to featureCounts."
+    },
+    "ftqOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "ftqOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "functionalEnrichmentRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "functionalEnrichmentRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "genome": {
+      "widget": "path",
+      "group": "Input data",
+      "label": "Reference genome",
+      "help": "Reference genome in FASTA. Provide genome or bwtIndex."
+    },
+    "gffAttribute": {
+      "widget": "text",
+      "group": "Annotation",
+      "label": "GFF attribute",
+      "help": "Attribute of the annotation file to use."
+    },
+    "gffFeature": {
+      "widget": "text",
+      "group": "Annotation",
+      "label": "GFF feature",
+      "help": "Feature of the annotation file to use."
+    },
+    "gffFile": {
+      "widget": "file",
+      "group": "Input data",
+      "label": "GFF/GTF annotation",
+      "help": "Path to the miRNA annotation file.",
+      "required_value": true,
+      "strict": true
+    },
+    "hclustMakeTableRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "hclustMakeTableRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "hclustRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "hclustRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "log2FC": {
+      "widget": "decimal",
+      "group": "Analysis",
+      "label": "log2FC threshold",
+      "help": "Absolute log2 fold-change threshold.",
+      "min": 0.0,
+      "step": 0.1,
+      "decimals": 2
+    },
+    "mqcOut": {
+      "widget": "text",
+      "group": "Output directories",
+      "label": "mqcOut",
+      "help": "Output subdirectory relative to outDir.",
+      "advanced": true
+    },
+    "msgDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "msgDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "msgMain": {
+      "widget": "text",
+      "group": "Private",
+      "label": "msgMain",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "msgTests": {
+      "widget": "text",
+      "group": "Private",
+      "label": "msgTests",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "multiqcVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "multiqcVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "networkRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "networkRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "organism": {
+      "widget": "select",
+      "group": "Input data",
+      "label": "Organism",
+      "help": "Organism used for functional analysis.",
+      "options": [
+        {
+          "value": "Mus musculus",
+          "label": "Mus musculus"
+        },
+        {
+          "value": "Homo sapiens",
+          "label": "Homo sapiens"
+        },
+        {
+          "value": "Caenorhabditis elegans",
+          "label": "Caenorhabditis elegans"
+        },
+        {
+          "value": "Danio rerio",
+          "label": "Danio rerio"
+        },
+        {
+          "value": "Rattus norvegicus",
+          "label": "Rattus norvegicus"
+        },
+        {
+          "value": "Gallus gallus",
+          "label": "Gallus gallus"
+        },
+        {
+          "value": "Drosophila melanogaster",
+          "label": "Drosophila melanogaster"
+        }
+      ]
+    },
+    "outDir": {
+      "widget": "text",
+      "group": "Project",
+      "label": "Output directory",
+      "help": "Output directory relative to workingDir."
+    },
+    "outputsMetadata": {
+      "widget": "text",
+      "group": "Private",
+      "label": "outputsMetadata",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "parametersMetadata": {
+      "widget": "text",
+      "group": "Private",
+      "label": "parametersMetadata",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "pipelineDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "pipelineDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "printerScr": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "printerScr",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "privateContainerDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "privateContainerDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "privateContainersJSON": {
+      "widget": "text",
+      "group": "Private",
+      "label": "privateContainersJSON",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "privateEnvironmentJSON": {
+      "widget": "text",
+      "group": "Private",
+      "label": "privateEnvironmentJSON",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "qvalue": {
+      "widget": "decimal",
+      "group": "Analysis",
+      "label": "q-value threshold",
+      "help": "FDR-corrected p-value threshold.",
+      "min": 0.0,
+      "max": 1.0,
+      "step": 0.01,
+      "decimals": 3
+    },
+    "rDeseq2Version": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rDeseq2Version",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "rEdgerVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rEdgerVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "rEnhancedVolcanoVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rEnhancedVolcanoVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "rNetworkVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rNetworkVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "rVennVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rVennVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "rdatanalysisVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "rdatanalysisVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "reactomeDB": {
+      "widget": "text",
+      "group": "Reference databases",
+      "label": "Reactome file",
+      "help": "Reactome Ensembl-to-pathway file name.",
+      "advanced": true
+    },
+    "reactomeInteractionsDB": {
+      "widget": "text",
+      "group": "Reference databases",
+      "label": "Reactome interactions file",
+      "help": "Reactome interactions file name.",
+      "advanced": true
+    },
+    "removeDockerImages": {
+      "widget": "flag",
+      "group": "Flags",
+      "label": "removeDockerImages",
+      "help": "Boolean flag."
+    },
+    "runChecks": {
+      "widget": "flag",
+      "group": "Flags",
+      "label": "runChecks",
+      "help": "Boolean flag."
+    },
+    "samtoolsBamstatsVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "samtoolsBamstatsVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "samtoolsVersion": {
+      "widget": "text",
+      "group": "Container versions",
+      "label": "samtoolsVersion",
+      "help": "Container image version.",
+      "advanced": true
+    },
+    "samtools_keep_sam_files": {
+      "widget": "flag",
+      "group": "Flags",
+      "label": "samtools_keep_sam_files",
+      "help": "Boolean flag."
+    },
+    "scriptsDir": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "scriptsDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "selectDEAsoftware": {
+      "widget": "select",
+      "group": "Analysis",
+      "label": "Differential expression software",
+      "help": "Select DESeq2, EdgeR or both.",
+      "options": [
+        {
+          "value": "deseq",
+          "label": "deseq"
+        },
+        {
+          "value": "edger",
+          "label": "edger"
+        },
+        {
+          "value": "both",
+          "label": "both"
+        }
+      ]
+    },
+    "self": {
+      "widget": "text",
+      "group": "Private",
+      "label": "self",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "shareDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "shareDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "sifManagerBin": {
+      "widget": "text",
+      "group": "Private",
+      "label": "sifManagerBin",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "skipPullDockerImages": {
+      "widget": "flag",
+      "group": "Flags",
+      "label": "skipPullDockerImages",
+      "help": "Boolean flag."
+    },
+    "tarbaseDB": {
+      "widget": "text",
+      "group": "Reference databases",
+      "label": "TarBase file",
+      "help": "TarBase file name.",
+      "advanced": true
+    },
+    "tempDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "tempDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "testAdapterBashScript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "testAdapterBashScript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "testsScr": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "testsScr",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "toolsDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "toolsDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "vendorBinDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "vendorBinDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "vendorDir": {
+      "widget": "text",
+      "group": "Private",
+      "label": "vendorDir",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "vennFormat": {
+      "widget": "select",
+      "group": "Analysis",
+      "label": "Venn format",
+      "help": "Output format of the Venn diagram.",
+      "options": [
+        {
+          "value": "png",
+          "label": "png"
+        },
+        {
+          "value": "svg",
+          "label": "svg"
+        },
+        {
+          "value": "tiff",
+          "label": "tiff"
+        }
+      ]
+    },
+    "vennRscript": {
+      "widget": "text",
+      "group": "Scripts",
+      "label": "vennRscript",
+      "help": "Private pipeline parameter.",
+      "hidden": true,
+      "advanced": true
+    },
+    "workingDir": {
+      "widget": "directory",
+      "group": "Project",
+      "label": "Working directory",
+      "help": "Working directory of the project.",
+      "required_value": true,
+      "strict": true
+    }
+  },
+  "validations": [
+    {
+      "id": "reference-input",
+      "type": "at_least_one",
+      "parameters": [
+        "genome",
+        "bwtIndex"
+      ],
+      "strict": true,
+      "message": "Provide either genome or bwtIndex."
+    },
+    {
+      "id": "reference-exclusive",
+      "type": "at_most_one",
+      "parameters": [
+        "genome",
+        "bwtIndex"
+      ],
+      "strict": false,
+      "message": "Both genome and bwtIndex are set; genome takes precedence."
+    },
+    {
+      "id": "containers-exclusive",
+      "type": "at_most_one",
+      "parameters": [
+        "containersJSON",
+        "containersDir"
+      ],
+      "strict": false,
+      "message": "Both containersJSON and containersDir are set; containersJSON takes precedence."
+    }
+  ]
 }

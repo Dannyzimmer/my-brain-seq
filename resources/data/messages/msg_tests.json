@@ -270,5 +270,96 @@
     "message": "Missing required parameters: {parameters}.",
     "indented": 1,
     "order": 1
+  },
+  {
+    "namespace": "inputs",
+    "key": "SUCCESS",
+    "severity": "info",
+    "message": "OK",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "FASTQ_DIR_MISSING",
+    "severity": "error",
+    "message": "FASTQ directory not found: {directory}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "FASTQ_NONE",
+    "severity": "error",
+    "message": "No FASTQ files found in {directory}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "CONDITIONS_MISSING",
+    "severity": "error",
+    "message": "Conditions file not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "CONTRAST_MISSING",
+    "severity": "error",
+    "message": "Contrast file not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "GFF_MISSING",
+    "severity": "error",
+    "message": "GFF file not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "REFERENCE_MISSING",
+    "severity": "error",
+    "message": "Either genome or bwtIndex must be provided.",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "GENOME_MISSING",
+    "severity": "error",
+    "message": "Genome file not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "INDEX_MISSING",
+    "severity": "error",
+    "message": "Bowtie index not found: {file}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "ORGANISM_MISSING",
+    "severity": "error",
+    "message": "Organism must be provided.",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "SELECT_DEA_INVALID",
+    "severity": "error",
+    "message": "Invalid selectDEAsoftware value: {value}",
+    "indented": 0
+  },
+  {
+    "namespace": "containers",
+    "key": "MISSING",
+    "severity": "error",
+    "message": "Container image not registered: {key}",
+    "indented": 0
+  },
+  {
+    "namespace": "inputs",
+    "key": "DATABASE_MISSING",
+    "severity": "error",
+    "message": "Database file not found: {file}",
+    "indented": 0
   }
 ]

@@ -186,34 +186,6 @@ test_slurm(){
     fi
 }
 
-test_user_fastq_filenames() {
-    # Check if there is at least one <name>_1.fastq 
-    # and <name>_2.fastq pair in fastqDir,
-    # but throw a specific error if the first read exists and the second is missing.
-    local found=0
-
-    for file in "$fastqDir"/*_1.fastq; do
-        [ -e "$file" ] || break
-        local base=$(basename "$file" "_1.fastq")
-
-        if [ -e "$fastqDir/${base}_2.fastq" ]; then
-            found=1
-            break
-        else
-            test_msg fastq_filenames.FASTQ_NONE_FOUND "directory=$fastqDir"
-            test_msg fastq_filenames.FASTQ_BASENAME_MISMATCH
-            exit 1
-        fi
-    done
-
-    if (( found )); then
-        test_msg fastq_filenames.SUCCESS
-        return 0
-    else
-        test_msg fastq_filenames.FASTQ_NONE_FOUND "directory=$fastqDir"
-        exit 1
-    fi
-}
 
 test_user_fasta_file() {
     local file="$1"
@@ -270,9 +242,10 @@ test_json(){
 }
 
 test_singularity_json() {
-    local file="${singularityJSON}"
+    local file="${1:-${singularityJSON}}"
+    shift || true
     local key
-    local required_keys=("seqkit" "fastq-pair" "repeat-masker" "edta" "braker3" "bbmap")
+    local required_keys=("$@")
 
     # 1) Check if the file exists and is a regular file
     if [[ ! -f "$file" ]]; then
