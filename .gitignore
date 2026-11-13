@@ -13,3 +13,6 @@ __test_*
 _developer/*
 deploy.sh
 .DS_Store
+
+# Downloaded databases
+resources/data/databases/

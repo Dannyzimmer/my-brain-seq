@@ -136,8 +136,13 @@
 			bash ${pipelineDir}/${scriptsDir}/container-preparation.sh
 		</task>
 
+		<!--Prepares the TarBase and Reactome databases-->
+		<task id="data-preparation" after="container-preparation">
+			bash ${pipelineDir}/${scriptsDir}/data-preparation.sh
+		</task>
+
 		<!--Creates and recreates the declared output directories-->
-		<task id="wd-initialization" after="container-preparation">
+		<task id="wd-initialization" after="data-preparation">
 			bash ${pipelineDir}/${scriptsDir}/wd-initialization.sh
 		</task>
 
@@ -357,6 +362,7 @@
 		<task-description id="checks">Test the environment and input data.</task-description>
 		<task-description id="env-preparation">Load the runtime environment into EnvHandler.</task-description>
 		<task-description id="container-preparation">Download and register the Singularity images.</task-description>
+		<task-description id="data-preparation">Download the TarBase and Reactome databases.</task-description>
 		<task-description id="wd-initialization">Creates and recreates the declared output directories.</task-description>
 		<task-description id="build-genome-index">Builds a genome index if the genome parameter is passed in compi.parameters.</task-description>
 		<task-description id="fastqc-qc">Quality control with FastQC.</task-description>

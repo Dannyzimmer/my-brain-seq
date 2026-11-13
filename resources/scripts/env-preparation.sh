@@ -24,9 +24,9 @@ if [[ "${containersJSON}" == "FALSE" ]]; then
         ENV param set "containerJSON" "${containersDir}/containers.json"
         ENV param set "containersDir" "${containersDir}"
     else
-        # Default JSON
-        ENV param set "containerJSON" "${INSTALLATION_PATH}/containers.json"
-        ENV param set "containersDir" "${INSTALLATION_PATH}"
+        # Default location inside the working directory
+        ENV param set "containerJSON" "${workingDir}/containers/containers.json"
+        ENV param set "containersDir" "${workingDir}/containers"
     fi
 else
     # User JSON file
