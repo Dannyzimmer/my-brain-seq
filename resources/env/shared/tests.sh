@@ -22,12 +22,12 @@ die() {
     return 1
 }
 
-print_ok() {
+test_print_ok() {
   local test_name="$1"   # the name to display in the fixed-width field
   local width=$_TEST_NAME_MAX_WIDTH
   local green="\e[32m"
   local reset="\e[0m"
-  local left_padding="$(indent_message "")"
+  local left_padding="$(test_indent_message "")"
 
   printf "%b${left_padding}>>[TEST][%-*.*s][OK]%b\n" \
     "$green" \
@@ -35,13 +35,13 @@ print_ok() {
     "$reset"
 }
 
-print_error() {
+test_print_error() {
     local test_name="$1"
     local message="$2"
     local width="$_TEST_NAME_MAX_WIDTH"
     local red="\e[31m"
     local reset="\e[0m"
-    local left_padding="$(indent_message "")"
+    local left_padding="$(test_indent_message "")"
 
     # %-*.*s pads or truncates test_name to width
     printf "%b${left_padding}>>[TEST][%-*.*s][ERROR]: %s%b\n" \
@@ -52,18 +52,18 @@ print_error() {
         >&2
 }
 
-get_text_len() {
+test_get_text_len() {
     local text="${1}"
     local cleaned_text
     cleaned_text="$(echo "${text}" | sed -r 's/\x1B(\[[0-9;]*[JKmsu]|\(B)//g' | wc -m)"
     echo "${cleaned_text}"
 }
 
-indent_message() {
+test_indent_message() {
     local message="$1"
     local header="[TEST]$_HEADER "
     local header_len
-    header_len=$(get_text_len "${header}")
+    header_len=$(test_get_text_len "${header}")
 
     local indentation
     indentation=$(printf '%*s' "${header_len}" "")
@@ -72,13 +72,13 @@ indent_message() {
 
 test_passed(){
     local test_name="$1"
-    print_ok "$test_name"
+    test_print_ok "$test_name"
 }
 
 test_failed(){
     local test_name="$1"
     local message="$2"
-    print_error "$test_name" "$message"
+    test_print_error "$test_name" "$message"
 }
 
 test_msg(){
@@ -91,9 +91,9 @@ test_msg(){
     local message="${raw//$'\n'/ }"
     local severity="$(LOGGER get-severity $log_path)"
     if [[ $severity == "error" ]]; then
-        print_error "$test_name" "$message"
+        test_print_error "$test_name" "$message"
     else
-        print_ok "$test_name"
+        test_print_ok "$test_name"
     fi
 }
 
@@ -109,9 +109,9 @@ test_msg_custom() {
     local severity
     severity="$(LOGGER get-severity "$log_path")"
     if [[ "$severity" == "error" ]]; then
-        print_error "$test_name" "$message"
+        test_print_error "$test_name" "$message"
     else
-        print_ok "$test_name"
+        test_print_ok "$test_name"
     fi
 }
 

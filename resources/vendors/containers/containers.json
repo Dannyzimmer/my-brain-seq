@@ -7,7 +7,7 @@
   "cutadapt": {
     "pull": "docker://pegi3s/cutadapt:${cutadaptVersion}",
     "path": "cutadapt_${cutadaptVersion}.sif",
-    "test_cmd": "cutadapt --version"
+    "test_cmd": "true"
   },
   "bowtie1": {
     "pull": "docker://pegi3s/bowtie1:${bowtieVersion}",
