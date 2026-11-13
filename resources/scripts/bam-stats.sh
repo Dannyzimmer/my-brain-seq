@@ -21,9 +21,9 @@ fi
 
 mkdir "${bs_output}"
 
-run_container samtools_bcftools sh -c "samtools stats ${bam_input} > ${bs_stats_file}"
+run_container samtools_bamstats sh -c "samtools stats ${bam_input} > ${bs_stats_file}"
 
-run_container samtools_bcftools sh -c "plot-bamstats -p ${bs_plot_names} ${bs_stats_file}"
+run_container samtools_bamstats sh -c "plot-bamstats -p ${bs_plot_names} ${bs_stats_file}"
 
 if [[ -f "${bs_stats_file}" ]]; then
 	register_output "bamstats:${bamFile}_stats" "${bs_stats_file}" "output::bamstOut"
